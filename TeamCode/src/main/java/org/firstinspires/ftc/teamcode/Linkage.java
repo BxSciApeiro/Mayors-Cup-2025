@@ -15,12 +15,13 @@ public class Linkage extends LinearOpMode {
         double maxHeight = 53.543;
         double highBasketHeight = 43.0;
         double lowBasketHeight = 25.75;
-        double upLinearTgtPwr = this.gamepad1.right_trigger;
-        double downLinearTgtPwr = this.gamepad1.left_trigger;
 
         waitForStart();
 
         while(opModeIsActive()) {
+            double upLinearTgtPwr = this.gamepad1.right_trigger;
+            double downLinearTgtPwr = this.gamepad1.left_trigger;
+            
             leftLinearMotor.setPower(upLinearTgtPwr);
             rightLinearMotor.setPower(-upLinearTgtPwr);
             leftLinearMotor.setPower(-downLinearTgtPwr);
