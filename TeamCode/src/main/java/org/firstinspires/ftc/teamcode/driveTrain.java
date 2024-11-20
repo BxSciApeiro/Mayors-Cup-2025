@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 @TeleOp
 public class driveTrain extends LinearOpMode {
     private DcMotor frontLeft, frontRight, backLeft, backRight;
+    private double speed = 0.65;
 
     @Override
     public void runOpMode() {
@@ -21,9 +22,13 @@ public class driveTrain extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            double y = -gamepad1.left_stick_y; // Forward/backward
-            double x = gamepad1.left_stick_x; // Strafe
-            double rx = gamepad1.right_stick_x; // Rotate
+            boolean speedTrigger = gamepad1.a;
+            double extraSpeed = speedTrigger ? 0.15 : 0.0;
+            double fullSpeed = speed + extraSpeed;
+
+            double y = -gamepad1.left_stick_y * fullSpeed; // Forward/backward
+            double x = gamepad1.left_stick_x * fullSpeed; // Strafe
+            double rx = gamepad1.right_stick_x * fullSpeed; // Rotate
 
             double frontLeftPower = y + x + rx;
             double frontRightPower = y - x - rx;
@@ -35,6 +40,10 @@ public class driveTrain extends LinearOpMode {
             backLeft.setPower(backLeftPower);
             backRight.setPower(backRightPower);
 
+            telemetry.addData("speedTrigger", speedTrigger);
+            telemetry.addData("ySpeed", y);
+            telemetry.addData("xSpeed", x);
+            telemetry.addData("rxSpeed", rx);
             telemetry.update();
         }
     }
