@@ -1,14 +1,12 @@
-package org.firstinspires.ftc.teamcode;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+package org.firstinspires.ftc.teamcode.robotFunctions;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@TeleOp
-public class Linkage extends LinearOpMode {
+import org.firstinspires.ftc.teamcode.mainControl;
+
+public class linkage extends mainControl {
     private DcMotor leftMotor,  rightMotor;
 
-    @Override
-    public void runOpMode()  {
+    public void runFunction()  {
         leftMotor = hardwareMap.get(DcMotor.class, "leftMotor");
         rightMotor = hardwareMap.get(DcMotor.class, "rightMotor");
         telemetry.addData("Status", "Initialized");

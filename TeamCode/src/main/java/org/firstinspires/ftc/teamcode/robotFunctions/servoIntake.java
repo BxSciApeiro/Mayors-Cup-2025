@@ -1,14 +1,12 @@
-package org.firstinspires.ftc.teamcode;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+package org.firstinspires.ftc.teamcode.robotFunctions;
 import com.qualcomm.robotcore.hardware.CRServo;
 
-@TeleOp
-public class intakeTest extends LinearOpMode {
+import org.firstinspires.ftc.teamcode.mainControl;
+
+public class servoIntake extends mainControl {
     public CRServo servoTest;
 
-    @Override
-    public void runOpMode() {
+    public void runFunction() {
         servoTest = hardwareMap.get(CRServo.class, "servoTest");
         waitForStart();
 

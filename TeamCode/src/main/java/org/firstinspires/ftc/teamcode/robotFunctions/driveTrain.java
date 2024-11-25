@@ -1,16 +1,14 @@
-package org.firstinspires.ftc.teamcode;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+package org.firstinspires.ftc.teamcode.robotFunctions;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@TeleOp
-public class driveTrain extends LinearOpMode {
+import org.firstinspires.ftc.teamcode.mainControl;
+
+public class driveTrain extends mainControl {
     private DcMotor frontLeft, frontRight, backLeft, backRight;
     private double speed = 0.65;
 
-    @Override
-    public void runOpMode() {
+    public void runFunction() {
         frontLeft = hardwareMap.get(DcMotor.class, "front_left");
         frontRight = hardwareMap.get(DcMotor.class, "front_right");
         backLeft = hardwareMap.get(DcMotor.class, "back_left");
