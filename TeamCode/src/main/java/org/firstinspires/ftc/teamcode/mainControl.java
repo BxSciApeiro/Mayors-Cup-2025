@@ -3,25 +3,18 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.robotFunctions.driveTrain;
-import org.firstinspires.ftc.teamcode.robotFunctions.linkage;
-import org.firstinspires.ftc.teamcode.robotFunctions.servoIntake;
-
 @TeleOp
 public class mainControl extends LinearOpMode {
+    org.firstinspires.ftc.teamcode.robotFunctions.mainControl bot = new org.firstinspires.ftc.teamcode.robotFunctions.mainControl();
+
     @Override
     public void runOpMode() {
-        driveTrain train = new driveTrain();
-        linkage linkage = new linkage();
-        servoIntake intake = new servoIntake();
+        bot.init(hardwareMap);
         waitForStart();
-
-
-        while (opModeIsActive()) {
-            train.runFunction();
-            linkage.runFunction();
-            intake.runFunction();
+        while(opModeIsActive()) {
+            bot.run(gamepad1);
         }
-
+        telemetry.addData("initialized", true);
+        telemetry.update();
     }
 }

@@ -1,24 +1,21 @@
 package org.firstinspires.ftc.teamcode.robotFunctions;
+
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.mainControl;
+public class servoIntake {
+    private HardwareMap hwMap;
+    private CRServo servo;
 
-public class servoIntake extends mainControl {
-    public CRServo servoTest;
+    public servoIntake(HardwareMap hwMap) {
+        this.hwMap = hwMap;
+        servo = hwMap.get(CRServo.class, "intakeServo");
+    }
 
-    public void runFunction() {
-        servoTest = hardwareMap.get(CRServo.class, "servoTest");
-        waitForStart();
-
-        while (opModeIsActive()) {
-            double buttonPower = -this.gamepad1.left_stick_y;
-            servoTest.setPower(buttonPower);
-
-            telemetry.addData("Target Power", buttonPower);
-            telemetry.addData("Motor Power", servoTest.getPower());
-            telemetry.addData("Status", "Running");
-            telemetry.update();
-        }
+    public void move(Gamepad gamepad) {
+        double buttonPower = -gamepad.left_stick_y;
+        servo.setPower(buttonPower);
     }
 }
 

@@ -1,49 +1,44 @@
 package org.firstinspires.ftc.teamcode.robotFunctions;
+
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.mainControl;
-
-public class driveTrain extends mainControl {
+public class driveTrain {
+    private HardwareMap hwMap;
     private DcMotor frontLeft, frontRight, backLeft, backRight;
-    private double speed = 0.65;
 
-    public void runFunction() {
-        frontLeft = hardwareMap.get(DcMotor.class, "front_left");
-        frontRight = hardwareMap.get(DcMotor.class, "front_right");
-        backLeft = hardwareMap.get(DcMotor.class, "back_left");
-        backRight = hardwareMap.get(DcMotor.class, "back_right");
+    public driveTrain(HardwareMap hwMap) {
+        this.hwMap = hwMap;
+        init();
+    }
 
-        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+    private void init() {
+        frontLeft = hwMap.get(DcMotor.class, "front_left");
+        frontRight = hwMap.get(DcMotor.class, "front_right");
+        backLeft = hwMap.get(DcMotor.class, "back_left");
+        backRight = hwMap.get(DcMotor.class, "back_right");
 
-        waitForStart();
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
 
-        while (opModeIsActive()) {
-            boolean speedTrigger = gamepad1.a;
-            double extraSpeed = speedTrigger ? 0.15 : 0.0;
-            double fullSpeed = speed + extraSpeed;
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    }
 
-            double y = -gamepad1.left_stick_y * fullSpeed; // Forward/backward
-            double x = gamepad1.left_stick_x * fullSpeed; // Strafe
-            double rx = gamepad1.right_stick_x * fullSpeed; // Rotate
+    double STRAFE_INCREASE = 1.1;
+    public void setWeightedDrivePower(Gamepad gamepad) {
+        double x = gamepad.left_stick_x * STRAFE_INCREASE;
+        double y = gamepad.left_stick_y;
+        double rx = gamepad.right_stick_x;
 
-            double frontLeftPower = y + x + rx;
-            double frontRightPower = y - x - rx;
-            double backLeftPower = y - x + rx;
-            double backRightPower = y + x - rx;
-
-            frontLeft.setPower(frontLeftPower);
-            frontRight.setPower(frontRightPower);
-            backLeft.setPower(backLeftPower);
-            backRight.setPower(backRightPower);
-
-            telemetry.addData("speedTrigger", speedTrigger);
-            telemetry.addData("ySpeed", y);
-            telemetry.addData("xSpeed", x);
-            telemetry.addData("rxSpeed", rx);
-            telemetry.update();
-        }
+        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+        frontLeft.setPower((y + x + rx) / denominator);
+        backLeft.setPower((y - x + rx)  / denominator);
+        frontRight.setPower((y - x - rx)/ denominator);
+        backRight.setPower((y + x - rx) / denominator);
     }
 }
-
