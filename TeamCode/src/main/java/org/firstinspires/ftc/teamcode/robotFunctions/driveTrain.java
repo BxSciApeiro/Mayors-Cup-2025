@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.robotFunctions;
 
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -20,25 +20,28 @@ public class driveTrain {
         backLeft = hwMap.get(DcMotor.class, "back_left");
         backRight = hwMap.get(DcMotor.class, "back_right");
 
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        backLeft.setDirection(DcMotor.Direction.REVERSE);
-
-        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
-    double STRAFE_INCREASE = 1.1;
-    public void setWeightedDrivePower(Gamepad gamepad) {
-        double x = gamepad.left_stick_x * STRAFE_INCREASE;
-        double y = gamepad.left_stick_y;
-        double rx = gamepad.right_stick_x;
+    double speed = 0.65;
+    public void drivePower(Gamepad gamepad) {
+        boolean speedTrigger = gamepad.a;
+        double extraSpeed = speedTrigger ? 0.15 : 0.0;
+        double fullSpeed = speed + extraSpeed;
 
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        frontLeft.setPower((y + x + rx) / denominator);
-        backLeft.setPower((y - x + rx)  / denominator);
-        frontRight.setPower((y - x - rx)/ denominator);
-        backRight.setPower((y + x - rx) / denominator);
+        double y = -gamepad.left_stick_y * fullSpeed;
+        double x = gamepad.left_stick_x * fullSpeed;
+        double rx = gamepad.right_stick_x * fullSpeed;
+
+        double frontLeftPower = y + x + rx;
+        double frontRightPower = y - x - rx;
+        double backLeftPower = y - x + rx;
+        double backRightPower = y + x - rx;
+
+        frontLeft.setPower(frontLeftPower);
+        frontRight.setPower(frontRightPower);
+        backLeft.setPower(backLeftPower);
+        backRight.setPower(backRightPower);
     }
 }

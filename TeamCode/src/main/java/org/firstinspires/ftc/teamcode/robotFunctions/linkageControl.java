@@ -4,8 +4,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.mainControl;
-
 public class linkageControl {
     private HardwareMap hwMap;
     private DcMotor leftMotor, rightMotor;
@@ -25,15 +23,12 @@ public class linkageControl {
         double highBasketHeight = 43.0;
         double lowBasketHeight = 25.75;
 
-        double rightTriggerPower = (gamepad.right_trigger / 2) * -1;
-        double leftTriggerPower = (gamepad.left_trigger / 2) * -1;
+        double upPower = gamepad.right_trigger;
+        double downPower = gamepad.left_trigger;
 
-        // clock & counterclock
-        leftMotor.setPower(rightTriggerPower);
-        rightMotor.setPower(rightTriggerPower);
-
-        // counterclock & clock
-        leftMotor.setPower(leftTriggerPower);
-        rightMotor.setPower(leftTriggerPower);
+        leftMotor.setPower(upPower);
+        rightMotor.setPower(-upPower);
+        leftMotor.setPower(-downPower);
+        leftMotor.setPower(downPower);
     }
 }
