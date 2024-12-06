@@ -3,17 +3,14 @@ package org.firstinspires.ftc.teamcode.robotFunctions;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class linkageControl {
-    private HardwareMap hwMap;
     private DcMotor leftMotor, rightMotor;
+    private ElapsedTime elapsedTime = new ElapsedTime();
+    private double seconds = 0.0;
 
     public linkageControl(HardwareMap hwMap) {
-        this.hwMap = hwMap;
-        init();
-    }
-
-    public void init() {
         leftMotor = hwMap.get(DcMotor.class, "leftMotor");
         rightMotor = hwMap.get(DcMotor.class, "rightMotor");
     }
@@ -23,12 +20,26 @@ public class linkageControl {
         double highBasketHeight = 43.0;
         double lowBasketHeight = 25.75;
 
-        double upPower = gamepad.right_trigger;
-        double downPower = gamepad.left_trigger;
+        double upPower = gamepad.right_trigger * 0.1;
+        double downPower = 0;
 
-        leftMotor.setPower(upPower);
-        rightMotor.setPower(-upPower);
+        if (gamepad.left_trigger > 0) {
+            seconds += elapsedTime.seconds();
+            elapsedTime.reset();
+
+            if (seconds < 2.0) {
+                downPower = gamepad.left_trigger * 0.1;
+            } else {
+                downPower = 0;
+            }
+        } else if (seconds > 0) {
+            seconds -= elapsedTime.seconds();
+            elapsedTime.reset();
+        }
+
         leftMotor.setPower(-downPower);
+        rightMotor.setPower(upPower);
         leftMotor.setPower(downPower);
+        rightMotor.setPower(-upPower);
     }
 }

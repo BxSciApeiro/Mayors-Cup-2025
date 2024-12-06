@@ -6,15 +6,9 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class driveTrain {
-    private HardwareMap hwMap;
     private DcMotor frontLeft, frontRight, backLeft, backRight;
 
     public driveTrain(HardwareMap hwMap) {
-        this.hwMap = hwMap;
-        init();
-    }
-
-    private void init() {
         frontLeft = hwMap.get(DcMotor.class, "front_left");
         frontRight = hwMap.get(DcMotor.class, "front_right");
         backLeft = hwMap.get(DcMotor.class, "back_left");

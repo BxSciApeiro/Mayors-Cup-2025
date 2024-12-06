@@ -5,11 +5,9 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class servoIntake {
-    private HardwareMap hwMap;
-    private CRServo servo;
+    private final CRServo servo;
 
     public servoIntake(HardwareMap hwMap) {
-        this.hwMap = hwMap;
         servo = hwMap.get(CRServo.class, "intakeServo");
     }
 
