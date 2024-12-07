@@ -7,11 +7,6 @@ public class Control {
     private driveTrain drive;
     private linkageControl linkage;
     private servoIntake intake;
-    private Gamepad gamePad;
-
-    public Control(Gamepad gamePad) {
-        this.gamePad = gamePad;
-    }
 
     public void init(HardwareMap hwMap) {
         drive = new driveTrain(hwMap);
@@ -19,7 +14,7 @@ public class Control {
         intake = new servoIntake(hwMap);
     }
 
-    public void run() {
+    public void run(Gamepad gamePad) {
         drive.drivePower(gamePad);
         linkage.move(gamePad);
         intake.move(gamePad);

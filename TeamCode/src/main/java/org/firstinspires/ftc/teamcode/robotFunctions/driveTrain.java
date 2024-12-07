@@ -6,20 +6,22 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class driveTrain {
-    private DcMotor frontLeft, frontRight, backLeft, backRight;
+    private HardwareMap hwMap;
 
     public driveTrain(HardwareMap hwMap) {
-        frontLeft = hwMap.get(DcMotor.class, "front_left");
-        frontRight = hwMap.get(DcMotor.class, "front_right");
-        backLeft = hwMap.get(DcMotor.class, "back_left");
-        backRight = hwMap.get(DcMotor.class, "back_right");
-
-        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.hwMap = hwMap;
     }
 
     double speed = 0.65;
     public void drivePower(Gamepad gamepad) {
+        DcMotor frontLeft = hwMap.get(DcMotor.class, "front_left");
+        DcMotor frontRight = hwMap.get(DcMotor.class, "front_right");
+        DcMotor backLeft = hwMap.get(DcMotor.class, "back_left");
+        DcMotor backRight = hwMap.get(DcMotor.class, "back_right");
+
+        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+
         boolean speedTrigger = gamepad.a;
         double extraSpeed = speedTrigger ? 0.15 : 0.0;
         double fullSpeed = speed + extraSpeed;

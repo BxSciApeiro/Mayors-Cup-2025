@@ -7,14 +7,14 @@ import org.firstinspires.ftc.teamcode.robotFunctions.Control;
 
 @TeleOp
 public class mainControl extends LinearOpMode {
-    Control bot = new Control(gamepad1);
+    Control bot = new Control();
 
     @Override
     public void runOpMode() {
         bot.init(hardwareMap);
         waitForStart();
         while(opModeIsActive()) {
-          bot.run();
+          bot.run(gamepad1);
         }
         telemetry.addData("initialized", true);
         telemetry.update();
