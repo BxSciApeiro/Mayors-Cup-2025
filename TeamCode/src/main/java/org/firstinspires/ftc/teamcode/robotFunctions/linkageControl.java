@@ -21,39 +21,15 @@ public class linkageControl {
         double maxHeight = 53.543;
         double highBasketHeight = 43.0;
         double lowBasketHeight = 25.75;
+        double upPower = gamepad.right_trigger * 0.75;
+        double downPower = gamepad.left_trigger * 0.75;
 
-        double upPower = gamepad.right_trigger * 0.5;
-        double downPower = 0;
-
-        if (gamepad.left_trigger > 0) {
-            elapsedTime = new ElapsedTime();
-
-            if (seconds < 1.0) {
-                downPower = gamepad.left_trigger * 0.5;
-            } else if (seconds > 1.0) {
-                downPower = 0;
-            }
-
-            if (upPower == 1.0) {
-                seconds += elapsedTime.seconds();
-                leftMotor.setPower(-upPower);
-                rightMotor.setPower(upPower);
-            } else if (downPower > 0) {
-                seconds -= elapsedTime.seconds();
-                leftMotor.setPower(downPower);
-                rightMotor.setPower(-downPower);
-            } else {
-                leftMotor.setPower(0);
-                rightMotor.setPower(0);
-            }
-        } else {
-            elapsedTime = null;
+        if (!gamepad.right_bumper) {
+            leftMotor.setPower(-upPower);
+            rightMotor.setPower(upPower);
+            leftMotor.setPower(downPower);
+            rightMotor.setPower(-downPower);
         }
 
-        leftMotor.setPower(upPower);
-        rightMotor.setPower(-upPower);
-        leftMotor.setPower(-downPower);
-        leftMotor.setPower(downPower);
     }
-
 }

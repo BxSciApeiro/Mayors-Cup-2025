@@ -22,9 +22,7 @@ public class driveTrain {
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        boolean speedTrigger = gamepad.a;
-        double extraSpeed = speedTrigger ? 0.15 : 0.0;
-        double fullSpeed = speed + extraSpeed;
+        double fullSpeed = speed;
 
         double y = -gamepad.left_stick_y * fullSpeed;
         double x = gamepad.left_stick_x * fullSpeed;
