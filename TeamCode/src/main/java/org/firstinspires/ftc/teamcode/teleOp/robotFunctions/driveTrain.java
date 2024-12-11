@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robotFunctions;
+package org.firstinspires.ftc.teamcode.teleOp.robotFunctions;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;

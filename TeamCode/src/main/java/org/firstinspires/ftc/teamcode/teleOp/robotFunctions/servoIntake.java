@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robotFunctions;
+package org.firstinspires.ftc.teamcode.teleOp.robotFunctions;
 
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Gamepad;
