@@ -76,8 +76,8 @@ public class autonFullMaybe extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         LinkageAuto linkage = new LinkageAuto(hardwareMap);// Hardwaremap built into library (see MecanumDrive)
 
-        Vector2d leftVector = new Vector2d(25, 50);
-        Vector2d ForwardVector = new Vector2d(0, 50);// should move left
+        Vector2d leftVector = new Vector2d(35, 25);
+        Vector2d ForwardVector = new Vector2d(35, 0);// should move left
 
         TrajectoryActionBuilder gotoPoles = drive.actionBuilder(initialPose)
                 .strafeTo(ForwardVector).strafeTo(leftVector);
@@ -86,9 +86,8 @@ public class autonFullMaybe extends LinearOpMode {
         if (opModeIsActive()) {
             Actions.runBlocking(
                     new SequentialAction(
-                            new ParallelAction(
-                                    gotoPoles.build(),
-                                    linkage.moveUp()),
+                            gotoPoles.build(),
+                            linkage.moveUp(),
                             linkage.moveDown()));
 
         }
