@@ -21,6 +21,13 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     namespace = 'com.qualcomm.ftcrobotcontroller'
+    repositories {
+        maven { url = 'https://maven.brott.dev/' }
+    }
+
+    dependencies {
+        implementation 'com.acmerobotics.roadrunner:MeepMeep:0.1.6'
+    }
 }
 
 apply from: '../build.dependencies.gradle'
