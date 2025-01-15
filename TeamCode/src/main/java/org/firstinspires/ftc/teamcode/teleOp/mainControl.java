@@ -3,11 +3,11 @@ package org.firstinspires.ftc.teamcode.teleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.teleOp.robotFunctions.Control;
+import org.firstinspires.ftc.teamcode.teleOp.robotFunctions.robotControl;
 
 @TeleOp
 public class mainControl extends LinearOpMode {
-    Control bot = new Control();
+    robotControl bot = new robotControl();
 
     @Override
     public void runOpMode() {

@@ -4,11 +4,11 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class Claw {
+public class servoClaw {
     private final HardwareMap hwMap;
     private double armPosition = 0.7;
 
-    public Claw (HardwareMap hwMap) {
+    public servoClaw(HardwareMap hwMap) {
             this.hwMap = hwMap; }
 
     public void move(Gamepad gamepad) {
