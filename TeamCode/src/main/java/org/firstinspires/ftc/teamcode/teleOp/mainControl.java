@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.teleOp.robotFunctions.robotControl;
 
+
 @TeleOp
 public class mainControl extends LinearOpMode {
     robotControl bot = new robotControl();
@@ -18,5 +19,6 @@ public class mainControl extends LinearOpMode {
         }
         telemetry.addData("initialized", true);
         telemetry.update();
+
     }
 }

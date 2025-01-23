@@ -22,8 +22,8 @@ public class driveTrain {
         DcMotor frontRightMotor = hwMap.dcMotor.get("front_right");
         DcMotor backRightMotor = hwMap.dcMotor.get("back_right");
 
-        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         IMU imu = hwMap.get(IMU.class, "imu");
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(

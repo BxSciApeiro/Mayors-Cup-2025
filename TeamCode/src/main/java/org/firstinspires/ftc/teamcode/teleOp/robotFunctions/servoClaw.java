@@ -6,22 +6,21 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class servoClaw {
     private final HardwareMap hwMap;
-    private double armPosition = 0.7;
+    private double openPos = 0;
+    private double closePos = 0.4;
 
     public servoClaw(HardwareMap hwMap) {
             this.hwMap = hwMap; }
 
     public void move(Gamepad gamepad) {
-        Servo arm = hwMap.get(Servo.class, "armServo");
+        Servo claw = hwMap.get(Servo.class, "claw");
 
-        if (gamepad.y) {
-            armPosition = 0.5;
-        } else if (gamepad.b) {
-            armPosition = 1;
-        } else {
-            armPosition = 0.0;
+        if(gamepad.right_bumper) {
+            claw.setPosition(openPos);
+        }
+        if(gamepad.left_bumper) {
+            claw.setPosition(closePos);
         }
 
-        arm.setPosition(armPosition);
     }
 }

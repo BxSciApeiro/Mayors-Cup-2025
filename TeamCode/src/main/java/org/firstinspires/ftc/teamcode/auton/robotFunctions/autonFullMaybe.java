@@ -33,9 +33,9 @@ public class autonFullMaybe extends LinearOpMode {
         public class moveUp implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                leftMotor.setPower(-0.35);
-                rightMotor.setPower(0.35);
-                sleep(1000);
+                leftMotor.setPower(-0.15);
+                rightMotor.setPower(0.15);
+                sleep(500);
                 leftMotor.setPower(0);
                 rightMotor.setPower(0);
                 sleep(4000); //TODO COMMENT THIS OUT, PURELY FOR TESTING
