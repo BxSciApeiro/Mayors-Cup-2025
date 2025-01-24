@@ -10,7 +10,8 @@ public class MyClass {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(600);
         Vector2d leftVector = new Vector2d(10, -30);
-        Vector2d ForwardVector = new Vector2d(30, -30);
+        Vector2d ForwardVector = new Vector2d(0, -25);
+        
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
@@ -18,7 +19,7 @@ public class MyClass {
                 .build();
 
         myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(30, -65, 0))
-                        .strafeTo(ForwardVector).strafeTo(leftVector)
+                        .strafeTo(ForwardVector)
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)
