@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.teleOp.robotFunctions;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class linkageControl {
     private HardwareMap hwMap;
@@ -25,7 +24,6 @@ public class linkageControl {
 
         leftMotor.setPower(-upPower + downPower);
         rightMotor.setPower(upPower + -downPower);
-
         }
     }
 

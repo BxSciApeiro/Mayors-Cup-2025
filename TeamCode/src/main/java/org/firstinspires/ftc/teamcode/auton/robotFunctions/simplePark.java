@@ -12,16 +12,15 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.auton.MecanumDrive;
 
 @Autonomous
-public class autonPark extends LinearOpMode {
+public class simplePark extends LinearOpMode {
     public Pose2d initialPose;
-    public Pose2d endPose;
 
     @Override
     public void runOpMode() {
-        initialPose = new Pose2d(0, 0, 0);
+        initialPose = new Pose2d(25, -65, 0);
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose); // Hardwaremap built into library (see MecanumDrive)
 
-        Vector2d endVector = new Vector2d(56  , 0);
+        Vector2d endVector = new Vector2d(56  , -60);
 
         TrajectoryActionBuilder park = drive.actionBuilder(initialPose)
                 .strafeTo(endVector);

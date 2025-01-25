@@ -12,31 +12,33 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.auton.MecanumDrive;
 
 @Autonomous
-public class autonPushAndPark extends LinearOpMode {
+public class pushPark extends LinearOpMode {
     public Pose2d initialPose;
-    public Pose2d endPose;
+    public static int frontY = -10;
+    public static int backY = -60;
+    public static int initialX = 36;
 
     @Override
     public void runOpMode() {
         initialPose = new Pose2d(25, -65, 0);
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose); // Hardwaremap built into library (see MecanumDrive)
 
-        Vector2d rightVector = new Vector2d(40  , -65);
-        Vector2d ForwardVector = new Vector2d(40, -10);
-        Vector2d block1right = new Vector2d(48, -10);
-        Vector2d down1 = new Vector2d(50, -60);
-        Vector2d block2right = new Vector2d(58, -10);
-        Vector2d down2 = new Vector2d(60, -60);
+        Vector2d rightPos = new Vector2d(initialX, -65);
+        Vector2d forwardPos = new Vector2d(initialX, frontY);
+        Vector2d blockRightPos = new Vector2d(initialX + 10, frontY);
+        Vector2d blockDownPos = new Vector2d(initialX + 10, backY);
+        Vector2d blockUpPos = new Vector2d(initialX + 10, frontY);
+        Vector2d blockRightPos2 = new Vector2d(initialX + 20, frontY);
+        Vector2d blockDownPos2 = new Vector2d(initialX + 20, backY);
 
         TrajectoryActionBuilder block1 = drive.actionBuilder(initialPose)
-                .strafeTo(rightVector)
-                .strafeTo(ForwardVector)
-                .strafeTo(block1right)
-                .strafeTo(down1)
-                .strafeTo(block1right)
-                .strafeTo(block2right)
-                .strafeTo(down2);
-
+                .strafeTo(rightPos)
+                .strafeTo(forwardPos)
+                .strafeTo(blockRightPos)
+                .strafeTo(blockDownPos)
+                .strafeTo(blockUpPos)
+                .strafeTo(blockRightPos2)
+                .strafeTo(blockDownPos2);
 
         waitForStart();
         if (opModeIsActive()) {

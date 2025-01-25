@@ -10,16 +10,17 @@ public class servoClaw {
     private double openPos = 0.8;
 
     public servoClaw(HardwareMap hwMap) {
-        this.hwMap = hwMap; }
+        this.hwMap = hwMap;
+    }
 
     public void move(Gamepad gamepad) {
         Servo claw = hwMap.get(Servo.class, "claw");
 
-        if (gamepad.right_bumper) {
+        if (gamepad.left_bumper) {
             claw.setPosition(closePos);
         }
 
-        if (gamepad.left_bumper) {
+        if (gamepad.right_bumper) {
             claw.setPosition(openPos);
         }
     }
