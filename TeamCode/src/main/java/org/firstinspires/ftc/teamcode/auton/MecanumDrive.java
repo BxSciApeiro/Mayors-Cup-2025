@@ -72,7 +72,7 @@ public final class MecanumDrive {
         //TODO everything up to and including angular ramp logger done
         public double kS = 1.4684368123367726;
         public double kV = 0.004349682436555219;
-        public double kA = 0.000001;
+        public double kA = 0.0001;
 
         // path profile parameters (in inches)
         public double maxWheelVel = 50;
