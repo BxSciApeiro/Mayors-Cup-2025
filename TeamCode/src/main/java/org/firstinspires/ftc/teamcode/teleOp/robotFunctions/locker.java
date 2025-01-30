@@ -22,12 +22,6 @@ public class locker {
             locker.setPosition(lockerPos);
         }
 
-        //right bumper = claw close
-        // left bumper = claw open
-        // triangle   unlock hang
-        //  square  lock hang
-        // up dpad
-
         if (gamepad.square) {
             locker2Pos = 0;
             locker2.setPosition(locker2Pos);

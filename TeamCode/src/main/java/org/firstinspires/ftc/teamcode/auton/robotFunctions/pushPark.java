@@ -20,7 +20,7 @@ public class pushPark extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        initialPose = new Pose2d(25, -65, 0);
+        initialPose = new Pose2d(25, -65, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose); // Hardwaremap built into library (see MecanumDrive)
 
         Vector2d rightPos = new Vector2d(initialX, -65);

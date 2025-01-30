@@ -21,20 +21,25 @@ public class simulation {
         Vector2d blockUpPos = new Vector2d(initialX + 10, frontY);
         Vector2d blockRightPos2 = new Vector2d(initialX + 20, frontY);
         Vector2d blockDownPos2 = new Vector2d(initialX + 20, backY);
+        Vector2d endVector = new Vector2d(56  , -60);
+        Vector2d poles = new Vector2d(0, -40);
+
+
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 17.75)
                 .build();
 
-        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(25, -65, 0))
-                .strafeTo(rightPos)
-                .strafeTo(forwardPos)
-                .strafeTo(blockRightPos)
-                .strafeTo(blockDownPos)
-                .strafeTo(blockUpPos)
-                .strafeTo(blockRightPos2)
-                .strafeTo(blockDownPos2)
+        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(25, -65, Math.toRadians(90)))
+                //.strafeTo(rightPos)
+                //.strafeTo(forwardPos)
+                //.strafeTo(blockRightPos)
+                //.strafeTo(blockDownPos)
+                //.strafeTo(blockUpPos)
+                //.strafeTo(blockRightPos2)
+                //.strafeTo(blockDownPos2)
+                        .strafeTo(poles)
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)
