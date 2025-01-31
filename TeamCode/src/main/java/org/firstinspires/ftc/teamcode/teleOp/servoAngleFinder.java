@@ -15,7 +15,7 @@ public class servoAngleFinder extends LinearOpMode {
         servo = hardwareMap.get(Servo.class, "servotest" );
         waitForStart();
         while (opModeIsActive()) {
-            angle = angle +0.05;
+            angle = angle + 0.05;
             servo.setPosition(angle);
             telemetry.addData("servo is currently at: ", servo.getPosition());
             telemetry.update();
