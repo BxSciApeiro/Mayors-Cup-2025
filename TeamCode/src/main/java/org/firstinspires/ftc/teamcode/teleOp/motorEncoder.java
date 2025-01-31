@@ -29,10 +29,23 @@ public class motorEncoder extends LinearOpMode {
             double upPower = gamepad1.right_trigger * 0.75;
             double downPower = gamepad1.left_trigger * 0.75;
 
+            if (gamepad1.cross) {
+                leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                leftMotor.setTargetPosition(leftMotor.getCurrentPosition());
+                rightMotor.setTargetPosition(rightMotor.getCurrentPosition());
+
+            }
+
             leftMotor.setPower(-upPower + downPower);
             rightMotor.setPower(upPower + -downPower);
             telemetry.addData("Left Motor is at ", positionleft);
             telemetry.addData("Right Motor is at ", positionright);
+            telemetry.addData("left mode is at", leftMotor.getMode());
+            telemetry.addData("right mode ist at", rightMotor.getMode());
+            telemetry.addData("To lock click X", true);
+            telemetry.update();
 
 
         }

@@ -32,14 +32,13 @@ public class simulation {
                 .build();
 
         myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(25, -65, Math.toRadians(90)))
-                //.strafeTo(rightPos)
-                //.strafeTo(forwardPos)
-                //.strafeTo(blockRightPos)
-                //.strafeTo(blockDownPos)
-                //.strafeTo(blockUpPos)
-                //.strafeTo(blockRightPos2)
-                //.strafeTo(blockDownPos2)
-                        .strafeTo(poles)
+                .strafeTo(rightPos)
+                .strafeTo(forwardPos)
+                .strafeTo(blockRightPos)
+                .strafeTo(blockDownPos)
+                .strafeTo(blockUpPos)
+                .strafeTo(blockRightPos2)
+                .strafeTo(blockDownPos2)
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)
