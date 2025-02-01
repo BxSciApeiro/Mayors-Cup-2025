@@ -20,25 +20,28 @@ public class linkageControl {
     private int leftPos;
     private int rightPos;
 
+
     public enum lockStates {
         ON,
         OFF
     }
 
-    lockStates lockState;
-    int maxLeft = -9865;
-    int maxRight = 7415;
+    lockStates lockState = lockStates.OFF;
+    int maxLeft = -7184;
+    int maxRight = 7280;
 
     public linkageControl(HardwareMap hwMap, Telemetry tele) {
         this.hwMap = hwMap;
         this.tele = tele;
     }
-
-    public void move(Gamepad gamepad) {
+    public void init() {
         leftMotor = hwMap.get(DcMotorEx.class, "leftMotor");
         rightMotor = hwMap.get(DcMotorEx.class, "rightMotor");
+        leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
 
-        lockState = lockStates.OFF;
+    public void move(Gamepad gamepad) {
 
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

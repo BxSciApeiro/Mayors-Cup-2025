@@ -18,7 +18,7 @@ public class tail {
     public void move(Gamepad gamepad)  {
         CRServo tail = hwMap.get(CRServo.class, "tail");
 
-        if (gamepad.dpad_up) {
+        if (gamepad.share) {
             timer.reset();
             while (timer.seconds()<= 5) {
                 if (timer.seconds() == 1.0 || timer.seconds() == 3.0 || timer.seconds() == 5.0) {
