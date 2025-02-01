@@ -17,9 +17,6 @@ public class linkageControl {
 
     private int lockedLeftPos;
     private int lockedRightPos;
-    private int leftPos;
-    private int rightPos;
-
 
     public enum lockStates {
         ON,
@@ -27,8 +24,6 @@ public class linkageControl {
     }
 
     lockStates lockState = lockStates.OFF;
-    int maxLeft = -7184;
-    int maxRight = 7280;
 
     public linkageControl(HardwareMap hwMap, Telemetry tele) {
         this.hwMap = hwMap;
@@ -57,8 +52,8 @@ public class linkageControl {
             lockState = lockStates.OFF;
         }
 
-        leftPos = leftMotor.getCurrentPosition();
-        rightPos = rightMotor.getCurrentPosition();
+        int leftPos = leftMotor.getCurrentPosition();
+        int rightPos = rightMotor.getCurrentPosition();
 
         controlState(gamepad);
         tele.addData("leftMotor", leftPos);
@@ -70,8 +65,6 @@ public class linkageControl {
         double downPower = gamepad.left_trigger * 0.75;
         double TPS = 2779;
 
-        tele.addData("leftPos", lockedLeftPos);
-        tele.addData("rightPos", lockedRightPos);
         tele.addData("lockState", lockState);
 
         switch (lockState) {
@@ -89,13 +82,8 @@ public class linkageControl {
                 leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-                if ((leftPos < maxLeft) || (rightPos < maxRight)) {
-                    leftMotor.setPower(-upPower + downPower);
-                    rightMotor.setPower(upPower + -downPower);
-                } else {
-                    leftMotor.setPower(downPower);
-                    rightMotor.setPower(-downPower);
-                }
+                leftMotor.setPower(-upPower + downPower);
+                rightMotor.setPower(upPower + -downPower);
 
                 break;
         }
