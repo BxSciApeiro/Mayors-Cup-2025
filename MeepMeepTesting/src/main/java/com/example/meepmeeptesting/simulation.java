@@ -7,7 +7,7 @@ import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
 public class simulation {
-    public static int frontY = -10;
+    public static int frontY = 0;
     public static int backY = -60;
     public static int initialX = 36;
 
@@ -16,11 +16,11 @@ public class simulation {
 
         Vector2d rightPos = new Vector2d(initialX, -65);
         Vector2d forwardPos = new Vector2d(initialX, frontY);
-        Vector2d blockRightPos = new Vector2d(initialX + 10, frontY);
-        Vector2d blockDownPos = new Vector2d(initialX + 10, backY);
-        Vector2d blockUpPos = new Vector2d(initialX + 10, frontY);
-        Vector2d blockRightPos2 = new Vector2d(initialX + 20, frontY);
-        Vector2d blockDownPos2 = new Vector2d(initialX + 20, backY);
+        Vector2d blockRightPos = new Vector2d(initialX + 15, frontY);
+        Vector2d blockDownPos = new Vector2d(initialX + 15, backY);
+        Vector2d blockUpPos = new Vector2d(initialX + 15, frontY);
+        Vector2d blockRightPos2 = new Vector2d(initialX + 25, frontY);
+        Vector2d blockDownPos2 = new Vector2d(initialX + 25, backY);
         Vector2d endVector = new Vector2d(56  , -60);
         Vector2d poles = new Vector2d(0, -40);
 
