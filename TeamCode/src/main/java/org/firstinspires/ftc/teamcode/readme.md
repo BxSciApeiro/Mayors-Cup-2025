@@ -90,15 +90,6 @@ This line can simply be deleted , or commented out, to make the OpMode visible.
 
 
 
-## ADVANCED Multi-Team App management:  Cloning the TeamCode Module
-
-In some situations, you have multiple teams in your club and you want them to all share
-a common code organization, with each being able to *see* the others code but each having
-their own team module with their own code that they maintain themselves.
-
-In this situation, you might wish to clone the TeamCode module, once for each of these teams.
-Each of the clones would then appear along side each other in the Android Studio module list,
-together with the FtcRobotController module (and the original TeamCode module).
 
 Selective Team phones can then be programmed by selecting the desired Module from the pulldown list
 prior to clicking to the green Run arrow.

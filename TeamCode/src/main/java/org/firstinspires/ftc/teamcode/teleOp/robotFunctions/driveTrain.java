@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robotFunctions;
+package org.firstinspires.ftc.teamcode.teleOp.robotFunctions;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -12,7 +12,6 @@ public class driveTrain {
         this.hwMap = hwMap;
     }
 
-    double speed = 0.65;
     public void drivePower(Gamepad gamepad) {
         DcMotor frontLeft = hwMap.get(DcMotor.class, "front_left");
         DcMotor frontRight = hwMap.get(DcMotor.class, "front_right");
@@ -22,11 +21,10 @@ public class driveTrain {
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        double fullSpeed = speed;
 
-        double y = -gamepad.left_stick_y * fullSpeed;
-        double x = gamepad.left_stick_x * fullSpeed;
-        double rx = gamepad.right_stick_x * fullSpeed;
+        double y = -gamepad.left_stick_y;
+        double x = gamepad.left_stick_x;
+        double rx = gamepad.right_stick_x;
 
         double frontLeftPower = y + x + rx;
         double frontRightPower = y - x - rx;
