@@ -15,21 +15,21 @@ import org.firstinspires.ftc.teamcode.auton.MecanumDrive;
 public class pushPark extends LinearOpMode {
     public Pose2d initialPose;
     public static int frontY = -15;
-    public static int backY = -60;
+    public static int backY = -65;
     public static int initialX = 48;
 
     @Override
     public void runOpMode() {
-        initialPose = new Pose2d(25, -65, Math.toRadians(90));
+        initialPose = new Pose2d(25, backY, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose); // Hardwaremap built into library (see MecanumDrive)
 
         Vector2d rightPos = new Vector2d(initialX, -65);
         Vector2d forwardPos = new Vector2d(initialX, frontY);
         Vector2d blockRightPos = new Vector2d(initialX + 13, frontY);
-        Vector2d blockDownPos = new Vector2d(initialX + 13, backY);
+        Vector2d blockDownPos = new Vector2d(initialX + 13, backY + 5);
         Vector2d blockUpPos = new Vector2d(initialX + 13, frontY);
         Vector2d blockRightPos2 = new Vector2d(initialX + 25, frontY);
-        Vector2d blockDownPos2 = new Vector2d(initialX + 25, backY);
+        Vector2d blockDownPos2 = new Vector2d(initialX + 25, backY + 5);
         Vector2d finalForward = new Vector2d(initialX + 25, backY + 2);
 
         TrajectoryActionBuilder block1 = drive.actionBuilder(initialPose)

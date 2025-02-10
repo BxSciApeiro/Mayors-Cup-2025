@@ -29,6 +29,7 @@ public class linkageControl {
         this.hwMap = hwMap;
         this.tele = tele;
     }
+
     public void init() {
         leftMotor = hwMap.get(DcMotorEx.class, "leftMotor");
         rightMotor = hwMap.get(DcMotorEx.class, "rightMotor");
