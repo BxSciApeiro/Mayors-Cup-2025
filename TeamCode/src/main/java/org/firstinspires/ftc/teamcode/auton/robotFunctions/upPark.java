@@ -10,15 +10,17 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.auton.MecanumDrive;
+import org.firstinspires.ftc.teamcode.teleOp.robotFunctions.linkageControl;
 
 @Autonomous
-public class simplePark extends LinearOpMode {
+public class upPark extends LinearOpMode {
     public Pose2d initialPose;
 
     @Override
     public void runOpMode() {
         initialPose = new Pose2d(25, -65, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
+        linkageControl linkage = new linkageControl(hardwareMap, telemetry);
 
         Vector2d endVector = new Vector2d(75  , -65);
 
@@ -27,8 +29,10 @@ public class simplePark extends LinearOpMode {
 
         waitForStart();
         if (opModeIsActive()) {
-            Actions.runBlocking(new SequentialAction(park.build()));
+            Actions.runBlocking(new SequentialAction(linkage.autoMove(1000)));
         }
     }
 }
+
+
 

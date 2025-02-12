@@ -12,7 +12,7 @@ public class driveTrain {
         this.hwMap = hwMap;
     }
 
-    public void drivePower(Gamepad gamepad) {
+    public void move(Gamepad gamepad) {
         DcMotor frontLeft = hwMap.get(DcMotor.class, "front_left");
         DcMotor frontRight = hwMap.get(DcMotor.class, "front_right");
         DcMotor backLeft = hwMap.get(DcMotor.class, "back_left");
@@ -20,7 +20,6 @@ public class driveTrain {
 
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-
 
         double y = -gamepad.left_stick_y;
         double x = gamepad.left_stick_x;

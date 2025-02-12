@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.teamcode.teleOp.robotFunctions;
 
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.jetbrains.annotations.NotNull;
 
 public class linkageControl {
     private final HardwareMap hwMap;
@@ -18,12 +21,14 @@ public class linkageControl {
     private int lockedLeftPos;
     private int lockedRightPos;
 
+    private double TPS = 2779;
+
     public enum lockStates {
         ON,
         OFF
     }
 
-    lockStates lockState = lockStates.OFF;
+    lockStates lockState;
 
     public linkageControl(HardwareMap hwMap, Telemetry tele) {
         this.hwMap = hwMap;
@@ -33,14 +38,21 @@ public class linkageControl {
     public void init() {
         leftMotor = hwMap.get(DcMotorEx.class, "leftMotor");
         rightMotor = hwMap.get(DcMotorEx.class, "rightMotor");
-        leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    }
+        lockState = lockStates.OFF;
 
-    public void move(Gamepad gamepad) {
+        leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        leftMotor.setVelocity(TPS);
+        rightMotor.setVelocity(TPS);
 
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    }
+
+    public void move(Gamepad gamepad) {
+        int leftPos = leftMotor.getCurrentPosition();
+        int rightPos = rightMotor.getCurrentPosition();
 
         if (gamepad.dpad_up) {
             if (!prevGamePad.dpad_up) {
@@ -53,10 +65,8 @@ public class linkageControl {
             lockState = lockStates.OFF;
         }
 
-        int leftPos = leftMotor.getCurrentPosition();
-        int rightPos = rightMotor.getCurrentPosition();
-
         controlState(gamepad);
+
         tele.addData("leftMotor", leftPos);
         tele.addData("rightMotor", rightPos);
     }
@@ -64,7 +74,6 @@ public class linkageControl {
     public void controlState(Gamepad gamepad) {
         double upPower = gamepad.right_trigger * 0.75;
         double downPower = gamepad.left_trigger * 0.75;
-        double TPS = 2779;
 
         tele.addData("lockState", lockState);
 
@@ -75,19 +84,61 @@ public class linkageControl {
 
                 leftMotor.setTargetPosition(lockedLeftPos);
                 rightMotor.setTargetPosition(lockedRightPos);
-
-                leftMotor.setVelocity(TPS);
-                rightMotor.setVelocity(TPS);
                 break;
             case OFF:
-                leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-                leftMotor.setPower(-upPower + downPower);
-                rightMotor.setPower(upPower + -downPower);
+                if (leftMotor.getCurrentPosition() <= -50 && rightMotor.getCurrentPosition() >= 50) {
+                    leftMotor.setPower(-upPower + downPower);
+                    rightMotor.setPower(upPower + -downPower);
+                } else {
+                    leftMotor.setPower(-upPower);
+                    rightMotor.setPower(upPower);
+                }
 
                 break;
         }
+    }
+
+    public class AutoMove implements Action {
+        private boolean initialized = false;
+        private final int pos;
+
+        public AutoMove(int pos) {
+            this.pos = pos;
+            init();
+            leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftMotor.setVelocity(TPS / 2);
+            rightMotor.setVelocity(TPS / 2);
+        }
+
+        @Override
+        public boolean run(@NotNull TelemetryPacket packet) {
+            if (!initialized) {
+                leftMotor.setTargetPosition(-pos);
+                rightMotor.setTargetPosition(pos);
+                initialized = true;
+            }
+
+            double leftPos = leftMotor.getCurrentPosition();
+            double rightPos = rightMotor.getCurrentPosition();
+            packet.put("leftMotor", leftPos);
+            packet.put("rightMotor", rightPos);
+
+            if (leftPos < -pos || rightPos < pos) {
+                return true;
+            } else {
+                leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                return false;
+            }
+        }
+    }
+
+    public Action autoMove(int pos) {
+        return new AutoMove(pos);
     }
 }
 
