@@ -8,6 +8,10 @@ import org.firstinspires.ftc.teamcode.teleOp.robotFunctions.robotControl;
 @TeleOp
 public class mainControl extends LinearOpMode {
     robotControl bot = new robotControl();
+    public enum servoState {
+        OPEN,
+        CLOSED
+    }
 
     @Override
     public void runOpMode() {
@@ -19,6 +23,5 @@ public class mainControl extends LinearOpMode {
         }
         telemetry.addData("initialized", true);
         telemetry.update();
-
     }
 }

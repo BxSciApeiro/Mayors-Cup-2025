@@ -15,8 +15,7 @@ public class robotControl {
         drive = new driveTrain(hwMap);
         linkage = new linkageControl(hwMap, tele);
         locker = new locker(hwMap);
-        claw = new servoClaw(hwMap);
-        linkage.init();
+        claw = new servoClaw(hwMap, tele);
     }
 
     public void run(Gamepad gamePad) {
