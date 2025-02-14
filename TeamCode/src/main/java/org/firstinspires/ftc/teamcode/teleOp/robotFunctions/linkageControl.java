@@ -32,6 +32,7 @@ public class linkageControl {
     public linkageControl(HardwareMap hwMap, Telemetry tele) {
         this.hwMap = hwMap;
         this.tele = tele;
+        init();
     }
 
     public void init() {
@@ -39,20 +40,20 @@ public class linkageControl {
         rightMotor = hwMap.get(DcMotorEx.class, "rightMotor");
         lockState = lockStates.OFF;
 
-        leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        assert leftMotor != null;
+        assert rightMotor != null;
+
+        leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // will be removed on linkage works
+        rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public void move(Gamepad gamepad) {
-        init();
         int leftPos = leftMotor.getCurrentPosition();
         int rightPos = rightMotor.getCurrentPosition();
 
-        tele.addData("leftMode", leftMotor.getMode());
-        tele.addData("rightMotor", rightMotor.getMode());
         tele.addData("leftMotor", leftPos);
         tele.addData("rightMotor", rightPos);
 
@@ -74,8 +75,6 @@ public class linkageControl {
         double upPower = gamepad.right_trigger * 0.75;
         double downPower = gamepad.left_trigger * 0.75;
 
-        tele.addData("lockState", lockState);
-
         switch (lockState) {
             case ON:
                 leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -91,13 +90,13 @@ public class linkageControl {
                 leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-                if (leftMotor.getCurrentPosition() <= -50 && rightMotor.getCurrentPosition() >= 50) {
+//                if (leftMotor.getCurrentPosition() <= -50 && rightMotor.getCurrentPosition() >= 50) {
                     leftMotor.setPower(-upPower + downPower);
                     rightMotor.setPower(upPower + -downPower);
-                } else {
-                    leftMotor.setPower(-upPower);
-                    rightMotor.setPower(upPower);
-                }
+//                } else {
+//                    leftMotor.setPower(-upPower);
+//                    rightMotor.setPower(upPower);
+//                }
 
                 break;
         }
