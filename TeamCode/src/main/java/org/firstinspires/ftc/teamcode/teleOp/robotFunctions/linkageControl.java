@@ -103,44 +103,46 @@ public class linkageControl {
         }
     }
 
-//    public class AutoMove implements Action {
-//        private boolean initialized = false;
-//        private final int pos;
-//
-//        public AutoMove(int pos) {
-//            this.pos = pos;
-//            init();
-//            leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            leftMotor.setVelocity(TPS / 2);
-//            rightMotor.setVelocity(TPS / 2);
-//        }
-//
-//        @Override
-//        public boolean run(@NotNull TelemetryPacket packet) {
-//            if (!initialized) {
-//                leftMotor.setTargetPosition(-pos);
-//                rightMotor.setTargetPosition(pos);
-//                initialized = true;
-//            }
-//
-//            double leftPos = leftMotor.getCurrentPosition();
-//            double rightPos = rightMotor.getCurrentPosition();
-//            tele.addData("leftMotor", leftPos);
-//            tele.addData("rightMotor", rightPos);
-//
-//            if (leftPos < -pos || rightPos < pos) {
-//                return true;
-//            } else {
-//                leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//                rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//                return false;
-//            }
-//        }
-//    }
-//
-//    public Action autoMove(int pos) {
-//        return new AutoMove(pos);
-//    }
+    public class AutoMove implements Action {
+        private boolean initialized = false;
+        private final int pos;
+
+        public AutoMove(int pos) {
+            this.pos = pos;
+            init();
+        }
+
+        @Override
+        public boolean run(@NotNull TelemetryPacket packet) {
+            if (!initialized) {
+                leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                leftMotor.setVelocity(TPS / 2);
+                rightMotor.setVelocity(TPS / 2);
+                leftMotor.setTargetPosition(-pos);
+                rightMotor.setTargetPosition(pos);
+
+                initialized = true;
+            }
+
+            double leftPos = leftMotor.getCurrentPosition();
+            double rightPos = rightMotor.getCurrentPosition();
+
+            tele.addData("leftMotor", leftPos);
+            tele.addData("rightMotor", rightPos);
+
+            if (leftPos < -pos || rightPos < pos) {
+                return true;
+            } else {
+                leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                return false;
+            }
+        }
+    }
+
+    public Action autoMove(int pos) {
+        return new AutoMove(pos);
+    }
 }
 

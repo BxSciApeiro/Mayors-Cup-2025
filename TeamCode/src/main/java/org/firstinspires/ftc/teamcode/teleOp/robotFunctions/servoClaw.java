@@ -53,8 +53,8 @@ public class servoClaw {
     }
 
     public class AutoMove implements Action {
-        private boolean initialized = false;
         private final servoState state;
+        private boolean initialized = false;
 
         public AutoMove(servoState state) {
             this.state = state;
@@ -73,7 +73,7 @@ public class servoClaw {
             tele.addData("neededPos", pos);
             tele.addData("state", state);
 
-            return currentPos != pos;
+            return false;
         }
     }
 

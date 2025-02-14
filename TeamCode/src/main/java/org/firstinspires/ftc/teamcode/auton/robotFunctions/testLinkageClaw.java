@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.auton.robotFunctions;
 
-import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
@@ -16,7 +15,7 @@ import org.firstinspires.ftc.teamcode.teleOp.robotFunctions.linkageControl;
 import org.firstinspires.ftc.teamcode.teleOp.robotFunctions.servoClaw;
 
 @Autonomous
-public class upPark extends LinearOpMode {
+public class testLinkageClaw extends LinearOpMode {
     public Pose2d initialPose;
 
     @Override

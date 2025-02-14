@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.teleOp.robotFunctions.robotControl;
 
 @TeleOp
 public class mainControl extends LinearOpMode {
-    robotControl bot = new robotControl();
+    private final robotControl bot = new robotControl();
     public enum servoState {
         OPEN,
         CLOSED

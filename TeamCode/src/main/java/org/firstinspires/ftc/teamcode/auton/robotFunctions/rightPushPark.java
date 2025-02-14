@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.auton.MecanumDrive;
 
 @Autonomous
-public class pushPark extends LinearOpMode {
+public class rightPushPark extends LinearOpMode {
     public Pose2d initialPose;
     public static int frontY = -15;
     public static int backY = -65;
