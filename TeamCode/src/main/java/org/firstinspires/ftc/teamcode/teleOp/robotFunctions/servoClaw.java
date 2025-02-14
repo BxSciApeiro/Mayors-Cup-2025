@@ -16,8 +16,7 @@ public class servoClaw {
     private Servo claw;
     private double closePos = 0.2; //0.7 close 0.5 open for og claw, 0.9 close 0.8 open for second claw, 0.4 for third claw
     private double openPos = 0.6;  //0.9 close, 0.7 open for 1st qualifer claw
-
-    servoState state;
+    private double pos;
 
     public servoClaw(HardwareMap hwMap, Telemetry tele) {
         this.hwMap = hwMap;
@@ -26,25 +25,36 @@ public class servoClaw {
 
     public void init() {
         claw = hwMap.get(Servo.class, "claw");
-        state = servoState.OPEN;
     }
 
     public void move(Gamepad gamepad) {
         init();
 
         if (gamepad.right_bumper) {
-            claw.setPosition(closePos);
+            setPos(servoState.CLOSED);
         }
 
         if (gamepad.left_bumper) {
-            claw.setPosition(openPos);
+            setPos(servoState.OPEN);
+        }
+    }
+
+    public void setPos(servoState newState) {
+        switch (newState) {
+            case OPEN:
+                pos = openPos;
+                claw.setPosition(pos);
+                break;
+            case CLOSED:
+                pos = closePos;
+                claw.setPosition(pos);
+                break;
         }
     }
 
     public class AutoMove implements Action {
         private boolean initialized = false;
         private final servoState state;
-        private double pos;
 
         public AutoMove(servoState state) {
             this.state = state;
@@ -53,17 +63,8 @@ public class servoClaw {
 
         @Override
         public boolean run(@NotNull TelemetryPacket packet) {
-            switch (state) {
-                case CLOSED:
-                    pos = openPos;
-                    break;
-                case OPEN:
-                    pos = closePos;
-                    break;
-            }
-
             if (!initialized) {
-                claw.setPosition(pos);
+                setPos(state);
                 initialized = true;
             }
 
