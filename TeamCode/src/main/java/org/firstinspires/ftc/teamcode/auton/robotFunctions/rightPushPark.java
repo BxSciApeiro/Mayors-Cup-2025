@@ -32,7 +32,7 @@ public class rightPushPark extends LinearOpMode {
         Vector2d blockDownPos2 = new Vector2d(initialX + 25, backY + 5);
         Vector2d finalForward = new Vector2d(initialX + 25, backY + 2);
 
-        TrajectoryActionBuilder block1 = drive.actionBuilder(initialPose)
+        TrajectoryActionBuilder pushPark = drive.actionBuilder(initialPose)
                 .strafeTo(rightPos)
                 .strafeTo(forwardPos)
                 .strafeTo(blockRightPos)
@@ -44,7 +44,7 @@ public class rightPushPark extends LinearOpMode {
 
         waitForStart();
         if (opModeIsActive()) {
-            Actions.runBlocking(new SequentialAction(block1.build()));
+            Actions.runBlocking(new SequentialAction(pushPark.build()));
         }
     }
 }

@@ -78,11 +78,11 @@ public class linkageControl {
 
         switch (lockState) {
             case ON:
-                leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
                 leftMotor.setTargetPosition(lockedLeftPos);
                 rightMotor.setTargetPosition(lockedRightPos);
+
+                leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
                 leftMotor.setVelocity(TPS);
                 rightMotor.setVelocity(TPS);
@@ -113,12 +113,12 @@ public class linkageControl {
 
         @Override
         public boolean run(@NotNull TelemetryPacket packet) {
-            leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftMotor.setTargetPosition(-pos);
             rightMotor.setTargetPosition(pos);
-            leftMotor.setVelocity(TPS / 2);
-            rightMotor.setVelocity(TPS / 2);
+            leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftMotor.setVelocity(TPS);
+            rightMotor.setVelocity(TPS);
 
             double leftPos = leftMotor.getCurrentPosition();
             double rightPos = rightMotor.getCurrentPosition();
