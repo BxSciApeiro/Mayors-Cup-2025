@@ -43,8 +43,8 @@ public class linkageControl {
         assert leftMotor != null;
         assert rightMotor != null;
 
-        leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // will be removed on linkage works
-        rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -56,6 +56,7 @@ public class linkageControl {
 
         tele.addData("leftMotor", leftPos);
         tele.addData("rightMotor", rightPos);
+        tele.addData("lockState", lockState);
 
         if (gamepad.dpad_up) {
             if (!prevGamePad.dpad_up) {
@@ -90,20 +91,19 @@ public class linkageControl {
                 leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-//                if (leftMotor.getCurrentPosition() <= -50 && rightMotor.getCurrentPosition() >= 50) {
+                if (leftMotor.getCurrentPosition() <= -50 && rightMotor.getCurrentPosition() >= 50) {
                     leftMotor.setPower(-upPower + downPower);
                     rightMotor.setPower(upPower + -downPower);
-//                } else {
-//                    leftMotor.setPower(-upPower);
-//                    rightMotor.setPower(upPower);
-//                }
+                } else {
+                    leftMotor.setPower(-upPower);
+                    rightMotor.setPower(upPower);
+                }
 
                 break;
         }
     }
 
     public class AutoMove implements Action {
-        private boolean initialized = false;
         private final int pos;
 
         public AutoMove(int pos) {
@@ -113,16 +113,12 @@ public class linkageControl {
 
         @Override
         public boolean run(@NotNull TelemetryPacket packet) {
-            if (!initialized) {
-                leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                leftMotor.setVelocity(TPS / 2);
-                rightMotor.setVelocity(TPS / 2);
-                leftMotor.setTargetPosition(-pos);
-                rightMotor.setTargetPosition(pos);
-
-                initialized = true;
-            }
+            leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftMotor.setTargetPosition(-pos);
+            rightMotor.setTargetPosition(pos);
+            leftMotor.setVelocity(TPS / 2);
+            rightMotor.setVelocity(TPS / 2);
 
             double leftPos = leftMotor.getCurrentPosition();
             double rightPos = rightMotor.getCurrentPosition();

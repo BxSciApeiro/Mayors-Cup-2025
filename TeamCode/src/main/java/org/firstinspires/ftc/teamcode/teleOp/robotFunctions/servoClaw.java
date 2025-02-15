@@ -16,9 +16,11 @@ public class servoClaw {
     private final Telemetry tele;
     private ElapsedTime timer;
     private Servo claw;
-    private double closePos = 0.3; // 0.2 close 0.6 open crab claw 0.3 close 0.7 open arm claw
-    private double openPos = 0.7;
-    private double newPos;
+
+    servoState currentState;
+    double closePos;
+    double openPos;
+    double newPos;
 
     public servoClaw(HardwareMap hwMap, Telemetry tele) {
         this.hwMap = hwMap;
@@ -26,7 +28,9 @@ public class servoClaw {
     }
 
     public void init() {
-        claw = hwMap.get(Servo.class, "claw");
+        claw = hwMap.get(Servo.class, "frontClaw");
+        closePos = 0.3;
+        openPos = 0.7;
     }
 
     public void move(Gamepad gamepad) {
@@ -34,22 +38,25 @@ public class servoClaw {
 
         if (gamepad.right_bumper) {
             setPos(servoState.CLOSED);
+            claw.setPosition(newPos);
         }
 
         if (gamepad.left_bumper) {
             setPos(servoState.OPEN);
+            claw.setPosition(newPos);
         }
 
-        claw.setPosition(newPos);
         tele.addData("clawPos", claw.getPosition());
     }
 
     public void setPos(servoState newState) {
             switch (newState) {
                 case OPEN:
+                    currentState = servoState.OPEN;
                     newPos = openPos;
                     break;
                 case CLOSED:
+                    currentState = servoState.CLOSED;
                     newPos = closePos;
                     break;
             }

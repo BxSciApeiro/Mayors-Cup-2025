@@ -33,7 +33,7 @@ public class testLinkageClaw extends LinearOpMode {
         waitForStart();
         if (opModeIsActive()) {
             Actions.runBlocking(new SequentialAction(
-//                    linkage.autoMove(1000),
+                    linkage.autoMove(5800),
                     claw.autoMove(servoState.OPEN)
             ));
             telemetry.update();

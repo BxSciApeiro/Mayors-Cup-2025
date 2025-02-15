@@ -18,7 +18,7 @@ public class mainControl extends LinearOpMode {
         bot.init(hardwareMap, telemetry);
         waitForStart();
         while(opModeIsActive()) {
-          bot.run(gamepad1);
+          bot.run(gamepad1, gamepad2);
           telemetry.update();
         }
         telemetry.addData("initialized", true);
