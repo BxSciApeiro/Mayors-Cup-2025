@@ -70,7 +70,7 @@ public class testLinkageClaw extends LinearOpMode {
                     oneMove.build(),
                     linkage.autoMove(5500),
                     twoMove.build(),
-                    linkage.autoMove(4200),//5600 -> 5200
+                    linkage.autoMove(4200),
                     claw.autoMove(servoState.OPEN),
                     threeMove.build(),
                     linkage.autoMove(50),
