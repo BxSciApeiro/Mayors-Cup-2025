@@ -24,7 +24,10 @@ public class simulation {
         Vector2d sampleOneBack = new Vector2d(initialX + 25, frontY);
         Vector2d sampleTwoSpline = new Vector2d(initialX + 35, frontY);
         Vector2d sampleTwoPush = new Vector2d(initialX + 35, initialY + 5);
-        Vector2d park = new Vector2d(initialX + 35, initialY + 7);
+
+        Vector2d specPosTwo = new Vector2d(initialX + 25, initialY + 5);
+        Vector2d specTwoGet = new Vector2d(initialX + 25, initialY + 3);
+        Vector2d park = new Vector2d(initialX + 25, initialY + 7);
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
@@ -42,6 +45,12 @@ public class simulation {
                 .strafeTo(sampleOneBack)
                 .splineToConstantHeading(sampleTwoSpline, Math.toRadians(270))
                 .strafeTo(sampleTwoPush)
+                .splineTo(specPosTwo, Math.toRadians(-270))
+                .strafeTo(specTwoGet)
+                .strafeTo(specPos)
+                .turn(Math.toRadians(180))
+                .strafeTo(specPush)
+                .strafeTo(specBack)
                 .strafeTo(park)
                 .build());
 
