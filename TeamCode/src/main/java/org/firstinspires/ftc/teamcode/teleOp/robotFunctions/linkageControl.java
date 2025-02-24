@@ -24,6 +24,7 @@ public class linkageControl {
     private int lockedRightPos;
 
     private double TPS = 2779;
+    private double limitPos = 50;
 
     private lockStates lockState;
     public enum lockStates {
@@ -59,12 +60,12 @@ public class linkageControl {
         tele.addData("leftMotor", leftPos);
         tele.addData("rightMotor", rightPos);
         tele.addData("lockState", lockState);
-        if(gamepad.share) {
+
+        if (gamepad.share) {
             leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            leftLimit = -100;
-            rightLimit = 100;
-        }
+            limitPos = -200;
+        } // Temporary solution to faulty encoders values
 
         if (gamepad.dpad_up) {
             if (!prevGamePad.dpad_up) {
@@ -99,15 +100,13 @@ public class linkageControl {
                 leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-                    if (leftMotor.getCurrentPosition() <= -50 && rightMotor.getCurrentPosition() >= 50) {
-                        leftMotor.setPower(-upPower + downPower);
-                        rightMotor.setPower(upPower + -downPower);
-                    } else {
-                        leftMotor.setPower(-upPower);
-                        rightMotor.setPower(upPower);
-                    }
-
-
+                if (leftMotor.getCurrentPosition() <= -limitPos && rightMotor.getCurrentPosition() >= limitPos) {
+                    leftMotor.setPower(-upPower + downPower);
+                    rightMotor.setPower(upPower + -downPower);
+                } else {
+                    leftMotor.setPower(-upPower);
+                    rightMotor.setPower(upPower);
+                }
                 break;
         }
     }
@@ -138,7 +137,7 @@ public class linkageControl {
             if (leftPos < -pos || rightPos < pos) {
                 return true;
             } else {
-                leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); //TODO: ask why this
+                leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 return false;
             }
