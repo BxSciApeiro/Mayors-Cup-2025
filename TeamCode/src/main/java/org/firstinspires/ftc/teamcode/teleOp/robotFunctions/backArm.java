@@ -31,8 +31,8 @@ public class backArm extends servoClaw {
 
         backArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        closePos = 0.4;
-        openPos = 0.7;
+        closePos = 0.1;
+        openPos = 0.5;
     }
 
     @Override

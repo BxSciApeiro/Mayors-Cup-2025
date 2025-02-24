@@ -21,7 +21,7 @@ public class testLinkageClaw extends LinearOpMode {
     public Pose2d currentPose;
     int initialX = 15;
     int initialY = -65;
-    int frontY = -15;
+    int frontY = 5;
 
     @Override
     public void runOpMode() {
@@ -33,7 +33,7 @@ public class testLinkageClaw extends LinearOpMode {
         servoClaw claw = new servoClaw(hardwareMap, telemetry);
 
         Vector2d specPos = new Vector2d(initialX - 15, initialY + 30);
-        Vector2d specPush = new Vector2d(initialX - 15, initialY + 32);
+        Vector2d specPush = new Vector2d(initialX - 15, initialY + 40);
         Vector2d specBack = new Vector2d(initialX - 15, initialY + 25);
 
         Vector2d toSamplesOne = new Vector2d(initialX + 10, initialY + 30);
@@ -41,20 +41,22 @@ public class testLinkageClaw extends LinearOpMode {
         Vector2d toSamplesThree = new Vector2d(initialX + 25, frontY);
         Vector2d sampleOnePush = new Vector2d(initialX + 25, initialY + 10);
         Vector2d sampleOneReturn = new Vector2d(initialX + 25, frontY);
-        Vector2d sampleOneToSampleTwo = new Vector2d(initialX + 35, frontY);
-        Vector2d sampleTwoPush = new Vector2d(initialX + 35, initialY + 10);
+        Vector2d sampleOneToSampleTwo = new Vector2d(initialX + 40, frontY);
+        Vector2d sampleTwoPush = new Vector2d(initialX + 40, initialY + 10);
         Vector2d specLineUpOne = new Vector2d(initialX + 25, initialY + 20);
-        Vector2d specLineUpTwo = new Vector2d(initialX + 25, initialY);
+        Vector2d specLineUpTwo = new Vector2d(initialX + 25, initialY + 3);
         Vector2d specLineUpThree = new Vector2d(initialX + 25, initialY + 15);
 
         Vector2d specTwoPos = new Vector2d(initialX - 17, initialY + 30);
-        Vector2d specTwoPush = new Vector2d(initialX - 17, initialY + 32);
+        Vector2d specTwoPush = new Vector2d(initialX - 17, initialY + 40);
         Vector2d specTwoBack = new Vector2d(initialX - 17, initialY + 25);
 
         Vector2d park = new Vector2d(initialX + 25, initialY + 7);
 
         TrajectoryActionBuilder moveOne = drive.actionBuilder(currentPose)
-                .splineToConstantHeading(specPos, Math.toRadians(90))
+                .splineToConstantHeading(specPos, Math.toRadians(90));
+
+        TrajectoryActionBuilder moveForward = drive.actionBuilder(new Pose2d(specPos, Math.toRadians(90)))
                 .strafeTo(specPush);
 
         TrajectoryActionBuilder moveTwo = drive.actionBuilder(new Pose2d(specPush, Math.toRadians(90)))
@@ -87,12 +89,16 @@ public class testLinkageClaw extends LinearOpMode {
             Actions.runBlocking(new SequentialAction(
                     new ParallelAction(
                             claw.autoMove(servoState.CLOSED),
-                            linkage.autoMove(5500),
+                            linkage.autoMove(5200),
                             moveOne.build()
                     ),
+                    moveForward.build(),
                     linkage.autoMove(4100),
                     claw.autoMove(servoState.OPEN),
-                    moveTwo.build(),
+                    new ParallelAction(
+                            linkage.autoMove(100),
+                            moveTwo.build()
+                    ),
                     new ParallelAction(
                             linkage.autoMove(1000),
                             moveThree.build()
@@ -100,9 +106,9 @@ public class testLinkageClaw extends LinearOpMode {
                     claw.autoMove(servoState.CLOSED),
                     new ParallelAction(
                             moveFour.build(),
-                            linkage.autoMove(5500)
+                            linkage.autoMove(5200)
                     ),
-                    linkage.autoMove(4100),
+                    linkage.autoMove(100),
                     claw.autoMove(servoState.OPEN),
                     moveFive.build()
             ));

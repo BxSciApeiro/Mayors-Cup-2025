@@ -11,11 +11,11 @@ public class simulation {
     public static void main(String[] args) {
         int initialX = 20;
         int initialY = -65;
-        int frontY = -15;
+        int frontY = 5;
         MeepMeep meepMeep = new MeepMeep(600);
 
         Vector2d specPos = new Vector2d(initialX - 15, initialY + 30);
-        Vector2d specPush = new Vector2d(initialX - 15, initialY + 32);
+        Vector2d specPush = new Vector2d(initialX - 15, initialY + 35);
         Vector2d specBack = new Vector2d(initialX - 15, initialY + 25);
 
         Vector2d toSamplesOne = new Vector2d(initialX + 10, initialY + 30);
@@ -26,11 +26,11 @@ public class simulation {
         Vector2d sampleOneToSampleTwo = new Vector2d(initialX + 35, frontY);
         Vector2d sampleTwoPush = new Vector2d(initialX + 35, initialY + 10);
         Vector2d specLineUpOne = new Vector2d(initialX + 25, initialY + 20);
-        Vector2d specLineUpTwo = new Vector2d(initialX + 25, initialY);
+        Vector2d specLineUpTwo = new Vector2d(initialX + 25, initialY + 2);
         Vector2d specLineUpThree = new Vector2d(initialX + 25, initialY + 15);
 
         Vector2d specTwoPos = new Vector2d(initialX - 17, initialY + 30);
-        Vector2d specTwoPush = new Vector2d(initialX - 17, initialY + 32);
+        Vector2d specTwoPush = new Vector2d(initialX - 17, initialY + 35);
         Vector2d specTwoBack = new Vector2d(initialX - 17, initialY + 25);
 
         Vector2d park = new Vector2d(initialX + 25, initialY + 7);
