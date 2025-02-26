@@ -38,12 +38,12 @@ public class testLinkageClaw extends LinearOpMode {
 
         Vector2d toSamplesOne = new Vector2d(initialX + 10, initialY + 30);
         Vector2d toSamplesTwo = new Vector2d(initialX + 20, frontY);
-        Vector2d toSamplesThree = new Vector2d(initialX + 25, frontY);
-        Vector2d sampleOnePush = new Vector2d(initialX + 25, initialY + 10);
-        Vector2d sampleOneReturn = new Vector2d(initialX + 25, frontY);
-        Vector2d sampleOneToSampleTwo = new Vector2d(initialX + 40, frontY);
-        Vector2d sampleTwoPush = new Vector2d(initialX + 40, initialY + 10);
-        Vector2d specLineUpOne = new Vector2d(initialX + 25, initialY + 20);
+        Vector2d toSamplesThree = new Vector2d(initialX + 30, frontY);
+        Vector2d sampleOnePush = new Vector2d(initialX + 30, initialY + 10);
+        Vector2d sampleOneReturn = new Vector2d(initialX + 30, frontY);
+        Vector2d sampleOneToSampleTwo = new Vector2d(initialX + 45, frontY);
+        Vector2d sampleTwoPush = new Vector2d(initialX + 45, initialY + 10);
+        Vector2d specLineUpOne = new Vector2d(initialX + 30, initialY + 20);
         Vector2d specLineUpTwo = new Vector2d(initialX + 25, initialY + 3);
         Vector2d specLineUpThree = new Vector2d(initialX + 25, initialY + 15);
 
@@ -89,7 +89,7 @@ public class testLinkageClaw extends LinearOpMode {
             Actions.runBlocking(new SequentialAction(
                     new ParallelAction(
                             claw.autoMove(servoState.CLOSED),
-                            linkage.autoMove(5200),
+                            linkage.autoMove(5300),
                             moveOne.build()
                     ),
                     moveForward.build(),
@@ -102,15 +102,15 @@ public class testLinkageClaw extends LinearOpMode {
                     new ParallelAction(
                             linkage.autoMove(1000),
                             moveThree.build()
-                    ),
-                    claw.autoMove(servoState.CLOSED),
-                    new ParallelAction(
-                            moveFour.build(),
-                            linkage.autoMove(5200)
-                    ),
-                    linkage.autoMove(100),
-                    claw.autoMove(servoState.OPEN),
-                    moveFive.build()
+                    )
+                    //claw.autoMove(servoState.CLOSED),
+                    //new ParallelAction(
+                            //moveFour.build(),
+                            //linkage.autoMove(5300)
+                    //),
+                    //linkage.autoMove(100),
+                    //claw.autoMove(servoState.OPEN),
+                    //moveFive.build()
             ));
             telemetry.update();
         }
