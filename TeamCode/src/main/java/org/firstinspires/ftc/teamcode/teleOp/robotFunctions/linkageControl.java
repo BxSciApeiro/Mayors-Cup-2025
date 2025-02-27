@@ -125,8 +125,8 @@ public class linkageControl {
             rightMotor.setTargetPosition(pos);
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftMotor.setVelocity(TPS);
-            rightMotor.setVelocity(TPS);
+            leftMotor.setVelocity(TPS * 2);
+            rightMotor.setVelocity(TPS * 2);
 
             double leftPos = leftMotor.getCurrentPosition();
             double rightPos = rightMotor.getCurrentPosition();
