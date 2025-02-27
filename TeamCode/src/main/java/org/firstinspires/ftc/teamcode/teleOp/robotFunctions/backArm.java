@@ -33,7 +33,6 @@ public class backArm extends servoClaw {
         backClaw = hwMap.get(Servo.class, "backClaw");
         backArm = hwMap.get(DcMotorEx.class, "backArm");
         backRotator = hwMap.get(CRServo.class, "backRotator");
-        backArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         closePos = 0.1;
@@ -48,10 +47,12 @@ public class backArm extends servoClaw {
 
         if(gamepad.dpad_down) {
             backArm.setTargetPosition(armsSpecGrab);
+            backArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             backArm.setVelocity(TPS);
         }
         if(gamepad.dpad_up) {
             backArm.setTargetPosition(armUp);
+            backArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             backArm.setVelocity(TPS);
         }
 
