@@ -82,8 +82,8 @@ public class linkageControl {
     }
 
     public void controlState(Gamepad gamepad) {
-        double upPower = gamepad.right_trigger * 0.8;
-        double downPower = gamepad.left_trigger * 0.8;
+        double upPower = gamepad.right_trigger;
+        double downPower = gamepad.left_trigger;
 
         switch (lockState) {
             case ON:
