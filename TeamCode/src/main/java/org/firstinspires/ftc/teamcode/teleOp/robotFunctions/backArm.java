@@ -18,7 +18,7 @@ public class backArm extends servoClaw {
     private DcMotorEx backArm;
     private CRServo backRotator;
 
-    private final int TPS = 400; // TODO change value to make arm resist gravity, but not stutter
+    private final int TPS = 150; // TODO change value to make arm resist gravity, but not stutter
     private int armsSpecGrab;
     private int armSpecUp;
     private int armUp;
