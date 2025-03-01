@@ -32,7 +32,7 @@ public class simulation {
         Vector2d specTwoPosTwo = new Vector2d(initialX - 10, frontY - 2);
         Vector2d specTwoBack = new Vector2d(initialX - 10, frontY - 20);
 
-//        Vector2d park = new Vector2d(initialX + 75, initialY + 15);
+        Vector2d park = new Vector2d(initialX + 75, initialY + 15);
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
@@ -40,29 +40,28 @@ public class simulation {
                 .build();
 
         myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(initialX, initialY, Math.toRadians(90)))
-//                .splineToConstantHeading(specPos, Math.toRadians(90))
-//                .strafeTo(specPush)
-//
-//                .strafeTo(specBack)
-//                .splineToConstantHeading(toSamplesOne, Math.toRadians(5))
-//                .splineToConstantHeading(toSamplesTwo, Math.toRadians(90))
-//                .splineToConstantHeading(toSamplesThree, Math.toRadians(270))
-//                .splineToConstantHeading(sampleOnePush, Math.toRadians(90), new TranslationalVelConstraint(100))
-//                .splineToConstantHeading(sampleOneReturn, Math.toRadians(90), new TranslationalVelConstraint(100))
-//                .splineToConstantHeading(sampleOneToSampleTwo, Math.toRadians(270))
+                .splineToConstantHeading(specPos, Math.toRadians(90))
+                .strafeTo(specPush)
+
+                .strafeTo(specBack)
+                .splineToConstantHeading(toSamplesOne, Math.toRadians(5))
+                .splineToConstantHeading(toSamplesTwo, Math.toRadians(90))
+                .splineToConstantHeading(toSamplesThree, Math.toRadians(270))
+                .splineToConstantHeading(sampleOnePush, Math.toRadians(90), new TranslationalVelConstraint(100))
+                .splineToConstantHeading(sampleOneReturn, Math.toRadians(90), new TranslationalVelConstraint(100))
+                .splineToConstantHeading(sampleOneToSampleTwo, Math.toRadians(270))
                 .splineToConstantHeading(sampleTwoPush, Math.toRadians(90), new TranslationalVelConstraint(100))
                 .setTangent(Math.toRadians(90))
                 .splineTo(specLineUpOne, Math.toRadians(270))
                 .strafeTo(specLineUpTwo)
-//                .strafeTo(specTwoPosOne)
-//                .setTangent(Math.toRadians(-90))
-//                .splineTo(specTwoPosTwo, Math.toRadians(90), new TranslationalVelConstraint(100))
-//                .setTangent(Math.toRadians(-90))
-//                .splineToConstantHeading(specTwoPosTwo, Math.toRadians(90), new TranslationalVelConstraint(100))
-//                .strafeTo(specTwoPush)
-//                .strafeTo(specTwoBack)
-//
-//                .splineToConstantHeading(park, Math.toRadians(270), new TranslationalVelConstraint(100))
+                .strafeTo(specTwoPosOne)
+                .setTangent(Math.toRadians(-90))
+                .splineTo(specTwoPosTwo, Math.toRadians(90), new TranslationalVelConstraint(100))
+                .setTangent(Math.toRadians(-90))
+                .splineToConstantHeading(specTwoPosTwo, Math.toRadians(90), new TranslationalVelConstraint(100))
+                .strafeTo(specTwoBack)
+
+                .splineToConstantHeading(park, Math.toRadians(270), new TranslationalVelConstraint(100))
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)

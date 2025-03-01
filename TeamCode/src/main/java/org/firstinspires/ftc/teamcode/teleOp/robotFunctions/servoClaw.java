@@ -74,12 +74,13 @@ public class servoClaw {
         public boolean run(@NotNull TelemetryPacket packet) {
             setPos(state);
             claw.setPosition(newPos);
+            tele.addData("claw time", timer);
 
             if (timer == null) {
                 timer = new ElapsedTime();
             }
 
-            return timer.seconds() < 0.5;
+            return timer.seconds() < 0.35;
         }
     }
 

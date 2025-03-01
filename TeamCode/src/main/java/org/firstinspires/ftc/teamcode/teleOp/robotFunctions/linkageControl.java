@@ -113,9 +113,11 @@ public class linkageControl {
 
     public class AutoMove implements Action {
         private final int pos;
+        private final double power;
 
-        public AutoMove(int pos) {
+        public AutoMove(int pos, double power) {
             this.pos = pos;
+            this.power = power;
             init();
         }
 
@@ -125,8 +127,8 @@ public class linkageControl {
             rightMotor.setTargetPosition(pos);
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftMotor.setVelocity(TPS * 2);
-            rightMotor.setVelocity(TPS * 2);
+            leftMotor.setVelocity(TPS * power);
+            rightMotor.setVelocity(TPS * power);
 
             double leftPos = leftMotor.getCurrentPosition();
             double rightPos = rightMotor.getCurrentPosition();
@@ -144,8 +146,8 @@ public class linkageControl {
         }
     }
 
-    public Action autoMove(int pos) {
-        return new AutoMove(pos);
+    public Action autoMove(int pos, double power) {
+        return new AutoMove(pos, power);
     }
 }
 

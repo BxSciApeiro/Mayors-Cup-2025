@@ -18,7 +18,7 @@ public class backArm extends servoClaw {
     private DcMotorEx backArm;
     private CRServo backRotator;
 
-    private final int TPS = 50; // TODO change value to make arm resist gravity, but not stutter
+    private final int TPS = 400; // TODO change value to make arm resist gravity, but not stutter
     private int armsSpecGrab;
     private int armSpecUp;
     private int armUp;
@@ -38,19 +38,20 @@ public class backArm extends servoClaw {
         closePos = 0.1;
         openPos = 0.5;
         armsSpecGrab = -210;
-        armSpecUp = -185;
-        armUp = -5;
+        armSpecUp = -175;
+        armUp = -15;
     }
 
     public void move(Gamepad gamepad) {
         init();
 
-        if(gamepad.dpad_down) {
-            backArm.setTargetPosition(armsSpecGrab);
+        if (gamepad.dpad_down) {
+            backArm.setTargetPosition(armSpecUp);
             backArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             backArm.setVelocity(TPS);
         }
-        if(gamepad.dpad_up) {
+
+        if (gamepad.dpad_up) {
             backArm.setTargetPosition(armUp);
             backArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             backArm.setVelocity(TPS);
