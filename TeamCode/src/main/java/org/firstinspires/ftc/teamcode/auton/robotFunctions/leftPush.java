@@ -26,11 +26,11 @@ public class leftPush extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
 
         Vector2d forwardMove = new Vector2d(initialX, frontY);
-        Vector2d toSampleOne = new Vector2d(initialX - 18, frontY);
-        Vector2d sampleOnePush = new Vector2d(initialX - 18, backY);
-        Vector2d sampleOneReturn = new Vector2d(initialX - 18, frontY);
-        Vector2d toSampleTwo = new Vector2d(initialX - 32, frontY);
-        Vector2d sampleTwoPush = new Vector2d(initialX - 32, backY);
+        Vector2d toSampleOne = new Vector2d(initialX - 20, frontY);
+        Vector2d sampleOnePush = new Vector2d(initialX - 20, backY);
+        Vector2d sampleOneReturn = new Vector2d(initialX - 20, frontY);
+        Vector2d toSampleTwo = new Vector2d(initialX - 36, frontY);
+        Vector2d sampleTwoPush = new Vector2d(initialX - 36, backY);
 
         TrajectoryActionBuilder park = drive.actionBuilder(initialPose)
                 .splineToConstantHeading(forwardMove, Math.toRadians(90), new TranslationalVelConstraint(100))

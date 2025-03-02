@@ -21,7 +21,7 @@ public class testLinkageClaw extends LinearOpMode {
     public Pose2d currentPose;
     int initialX = 20;
     int initialY = -65;
-    int frontY = 8;
+    int frontY = 9;
 
     @Override
     public void runOpMode() {
@@ -32,22 +32,22 @@ public class testLinkageClaw extends LinearOpMode {
         linkageControl linkage = new linkageControl(hardwareMap, telemetry);
         servoClaw claw = new servoClaw(hardwareMap, telemetry);
 
-        Vector2d specPos = new Vector2d(initialX - 25, initialY + 43);
+        Vector2d specPos = new Vector2d(initialX - 25, initialY + 45);
         Vector2d specBack = new Vector2d(initialX - 25, initialY + 25);
 
         Vector2d toSamplesOne = new Vector2d(initialX + 5, initialY + 30);
         Vector2d toSamplesTwo = new Vector2d(initialX + 15, frontY);
-        Vector2d toSamplesThree = new Vector2d(initialX + 32, frontY);
-        Vector2d sampleOnePush = new Vector2d(initialX + 32, initialY + 24);
-        Vector2d sampleOneReturn = new Vector2d(initialX + 32, frontY);
-        Vector2d sampleOneToSampleTwo = new Vector2d(initialX + 50, frontY + 20);
-        Vector2d sampleTwoPush = new Vector2d(initialX + 50, initialY + 32);
-        Vector2d specLineUpOne = new Vector2d(initialX + 35, initialY + 32);
-        Vector2d specLineUpTwo = new Vector2d(initialX + 35, initialY + 3);
+        Vector2d toSamplesThree = new Vector2d(initialX + 34, frontY);
+        Vector2d sampleOnePush = new Vector2d(initialX + 34, initialY + 17);
+        Vector2d sampleOneReturn = new Vector2d(initialX + 34, frontY);
+        Vector2d sampleOneToSampleTwo = new Vector2d(initialX + 48, frontY + 18);
+        Vector2d sampleTwoPush = new Vector2d(initialX + 48, initialY + 27);
+        Vector2d specLineUpOne = new Vector2d(initialX + 35, initialY + 27);
+        Vector2d specLineUpTwo = new Vector2d(initialX + 35, initialY - 2);
 
-        Vector2d specTwoPosOne = new Vector2d(initialX + 35, initialY + 20);
-        Vector2d specTwoPosTwo = new Vector2d(initialX - 10, frontY);
-        Vector2d specTwoBack = new Vector2d(initialX - 10, frontY - 10);
+        Vector2d specTwoPosOne = new Vector2d(initialX + 35, initialY + 15);
+        Vector2d specTwoPosTwo = new Vector2d(initialX - 20, frontY + 2);
+        Vector2d specTwoBack = new Vector2d(initialX - 20, frontY - 10);
 
         Vector2d park = new Vector2d(initialX + 30, initialY + 40);
 
@@ -59,10 +59,10 @@ public class testLinkageClaw extends LinearOpMode {
                 .splineToConstantHeading(toSamplesOne, Math.toRadians(5))
                 .splineToConstantHeading(toSamplesTwo, Math.toRadians(90))
                 .splineToConstantHeading(toSamplesThree, Math.toRadians(270))
-                .splineToConstantHeading(sampleOnePush, Math.toRadians(90), new TranslationalVelConstraint(100))
+                .splineToConstantHeading(sampleOnePush, Math.toRadians(90), new TranslationalVelConstraint(80))
                 .splineToConstantHeading(sampleOneReturn, Math.toRadians(90), new TranslationalVelConstraint(100))
                 .splineToConstantHeading(sampleOneToSampleTwo, Math.toRadians(270))
-                .splineToConstantHeading(sampleTwoPush, Math.toRadians(90), new TranslationalVelConstraint(100));
+                .splineToConstantHeading(sampleTwoPush, Math.toRadians(90), new TranslationalVelConstraint(80));
 
         TrajectoryActionBuilder moveThree = drive.actionBuilder(new Pose2d(sampleTwoPush, Math.toRadians(90)))
                 .setTangent(Math.toRadians(90))
@@ -72,7 +72,7 @@ public class testLinkageClaw extends LinearOpMode {
         TrajectoryActionBuilder moveFour = drive.actionBuilder(new Pose2d(specLineUpTwo, Math.toRadians(-90)))
                 .strafeTo(specTwoPosOne)
                 .setTangent(Math.toRadians(-90))
-                .splineTo(specTwoPosTwo, Math.toRadians(90), new TranslationalVelConstraint(100));
+                .splineTo(specTwoPosTwo, Math.toRadians(80), new TranslationalVelConstraint(100));
 
         TrajectoryActionBuilder moveFive = drive.actionBuilder(new Pose2d(specTwoPosTwo, Math.toRadians(90)))
                 .strafeTo(specTwoBack)

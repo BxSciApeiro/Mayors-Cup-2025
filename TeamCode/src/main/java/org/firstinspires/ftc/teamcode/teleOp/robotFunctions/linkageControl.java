@@ -104,7 +104,7 @@ public class linkageControl {
             case OFF:
                 double leftPos = leftMotor.getCurrentPosition();
                 double rightPos = rightMotor.getCurrentPosition();
-                int highPos = 5900;
+                int highPos = 5800;
                 int wallPos = 950;
 
                 if (gamepad.dpad_up) {

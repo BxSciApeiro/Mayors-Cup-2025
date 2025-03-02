@@ -21,7 +21,7 @@ public class backArm extends servoClaw {
     private final int TPS = 100; // TODO change value to make arm resist gravity, but not stutter
     private int armUp = -3;
     private int armSpecUp = -170;
-    private int armsSpecGrab = -210;
+    private int armsSpecGrab = -215;
 
     public backArm(HardwareMap hwMap, Telemetry tele) {
         super(hwMap, tele);
@@ -54,12 +54,12 @@ public class backArm extends servoClaw {
             setArmPos(armsSpecGrab);
         }
 
-        if (gamepad.left_bumper) {
+        if (gamepad.right_bumper) {
             setPos(servoState.CLOSED);
             backClaw.setPosition(newPos);
         }
 
-        if (gamepad.right_bumper) {
+        if (gamepad.left_bumper) {
             setPos(servoState.OPEN);
             backClaw.setPosition(newPos);
         }
