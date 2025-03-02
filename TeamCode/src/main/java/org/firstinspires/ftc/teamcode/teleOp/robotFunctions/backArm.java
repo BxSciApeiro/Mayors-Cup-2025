@@ -18,10 +18,10 @@ public class backArm extends servoClaw {
     private DcMotorEx backArm;
     private CRServo backRotator;
 
-    private final int TPS = 150; // TODO change value to make arm resist gravity, but not stutter
-    private int armsSpecGrab;
-    private int armSpecUp;
-    private int armUp;
+    private final int TPS = 100; // TODO change value to make arm resist gravity, but not stutter
+    private int armUp = -3;
+    private int armSpecUp = -170;
+    private int armsSpecGrab = -210;
 
     public backArm(HardwareMap hwMap, Telemetry tele) {
         super(hwMap, tele);
@@ -37,43 +37,41 @@ public class backArm extends servoClaw {
 
         closePos = 0.1;
         openPos = 0.5;
-        armsSpecGrab = -210;
-        armSpecUp = -175;
-        armUp = -15;
     }
 
     public void move(Gamepad gamepad) {
         init();
 
-        if (gamepad.dpad_down) {
-            backArm.setTargetPosition(armSpecUp);
-            backArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backArm.setVelocity(TPS);
-        }
-
         if (gamepad.dpad_up) {
-            backArm.setTargetPosition(armUp);
-            backArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backArm.setVelocity(TPS);
+            setArmPos(armUp);
         }
 
-        if (gamepad.right_bumper) {
+        if (gamepad.dpad_left) {
+            setArmPos(armSpecUp);
+        }
+
+        if (gamepad.dpad_down) {
+            setArmPos(armsSpecGrab);
+        }
+
+        if (gamepad.left_bumper) {
             setPos(servoState.CLOSED);
             backClaw.setPosition(newPos);
         }
 
-        if (gamepad.left_bumper) {
+        if (gamepad.right_bumper) {
             setPos(servoState.OPEN);
             backClaw.setPosition(newPos);
         }
 
         double rotatorPower = gamepad.right_stick_y * 0.25;
         backRotator.setPower(rotatorPower);
+    }
 
-        tele.addData("current position of back arm", backArm.getCurrentPosition());
-        tele.addData("mode is ", backArm.getMode());
-        tele.addData("power is", backArm.getPower());
-        tele.addData("gamepad value", gamepad.left_stick_y);
+    public void setArmPos(int armPos) {
+        backArm.setTargetPosition(armPos);
+        backArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backArm.setVelocity(TPS);
     }
 }
 

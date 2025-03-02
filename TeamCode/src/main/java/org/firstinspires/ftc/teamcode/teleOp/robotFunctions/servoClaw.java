@@ -45,8 +45,6 @@ public class servoClaw {
             setPos(servoState.OPEN);
             claw.setPosition(newPos);
         }
-
-        tele.addData("clawPos", claw.getPosition());
     }
 
     public void setPos(servoState newState) {
@@ -74,7 +72,6 @@ public class servoClaw {
         public boolean run(@NotNull TelemetryPacket packet) {
             setPos(state);
             claw.setPosition(newPos);
-            tele.addData("claw time", timer);
 
             if (timer == null) {
                 timer = new ElapsedTime();

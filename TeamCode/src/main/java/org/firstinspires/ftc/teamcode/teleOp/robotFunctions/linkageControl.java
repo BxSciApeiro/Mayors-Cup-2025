@@ -23,6 +23,9 @@ public class linkageControl {
     private int lockedLeftPos;
     private int lockedRightPos;
 
+    boolean dPadUp = false;
+    boolean dPadDown = false;
+
     private double TPS = 2779;
     private double limitPos = 50;
 
@@ -65,18 +68,20 @@ public class linkageControl {
             leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             limitPos = -200;
+            leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         } // Temporary solution to faulty encoders values
 
-        if (gamepad.dpad_up) {
-            if (!prevGamePad.dpad_up) {
-                lockedLeftPos = leftMotor.getCurrentPosition();
-                lockedRightPos = rightMotor.getCurrentPosition();
-            }
-
-            lockState = lockStates.ON;
-        } else if (gamepad.dpad_down) {
-            lockState = lockStates.OFF;
-        }
+//        if (gamepad.dpad_up) {
+//            if (!prevGamePad.dpad_up) {
+//                lockedLeftPos = leftMotor.getCurrentPosition();
+//                lockedRightPos = rightMotor.getCurrentPosition();
+//            }
+//
+//            lockState = lockStates.ON;
+//        } else if (gamepad.dpad_down) {
+//            lockState = lockStates.OFF;
+//        }
 
         controlState(gamepad);
     }
@@ -97,38 +102,72 @@ public class linkageControl {
                 rightMotor.setVelocity(TPS);
                 break;
             case OFF:
-                leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                double leftPos = leftMotor.getCurrentPosition();
+                double rightPos = rightMotor.getCurrentPosition();
+                int highPos = 5900;
+                int wallPos = 950;
 
-                if (leftMotor.getCurrentPosition() <= -limitPos && rightMotor.getCurrentPosition() >= limitPos) {
-                    leftMotor.setPower(-upPower + downPower);
-                    rightMotor.setPower(upPower + -downPower);
-                } else {
-                    leftMotor.setPower(-upPower);
-                    rightMotor.setPower(upPower);
+                if (gamepad.dpad_up) {
+                    dPadUp = true;
+                }
+
+                if (gamepad.dpad_down) {
+                    dPadDown = true;
+                }
+
+                if (dPadUp) {
+                    setHeight(highPos);
+                    tele.addData("ifMet", !(leftPos < -highPos || rightPos < highPos));
+                    if (!(leftPos < -highPos || rightPos < highPos)) {
+                        leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                        rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                        dPadUp = false;
+                    }
+                }
+
+                if (dPadDown) {
+                    setHeight(wallPos);
+                    tele.addData("ifMet", !(leftPos < -wallPos || rightPos < wallPos));
+                    if (!(leftPos < -wallPos || rightPos < wallPos)) {
+                        leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                        rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                        dPadDown = false;
+                    }
+                }
+
+                if (!dPadUp && !dPadDown) {
+                    if (leftMotor.getCurrentPosition() <= -limitPos && rightMotor.getCurrentPosition() >= limitPos) {
+                        leftMotor.setPower(-upPower + downPower);
+                        rightMotor.setPower(upPower + -downPower);
+                    } else {
+                        leftMotor.setPower(-upPower);
+                        rightMotor.setPower(upPower);
+                    }
                 }
                 break;
         }
     }
 
+    public void setHeight(int pos) {
+        leftMotor.setTargetPosition(-pos);
+        rightMotor.setTargetPosition(pos);
+        leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftMotor.setVelocity(TPS);
+        rightMotor.setVelocity(TPS);
+    }
+
     public class AutoMove implements Action {
         private final int pos;
-        private final double power;
 
-        public AutoMove(int pos, double power) {
+        public AutoMove(int pos) {
             this.pos = pos;
-            this.power = power;
             init();
         }
 
         @Override
         public boolean run(@NotNull TelemetryPacket packet) {
-            leftMotor.setTargetPosition(-pos);
-            rightMotor.setTargetPosition(pos);
-            leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftMotor.setVelocity(TPS * power);
-            rightMotor.setVelocity(TPS * power);
+            setHeight(pos);
 
             double leftPos = leftMotor.getCurrentPosition();
             double rightPos = rightMotor.getCurrentPosition();
@@ -146,8 +185,8 @@ public class linkageControl {
         }
     }
 
-    public Action autoMove(int pos, double power) {
-        return new AutoMove(pos, power);
+    public Action autoMove(int pos) {
+        return new AutoMove(pos);
     }
 }
 
