@@ -10,22 +10,21 @@ public class robotControl {
     private linkageControl linkage;
     private locker locker;
     private servoClaw claw;
-    private tail tail;
+    private backArm arm;
 
     public void init(HardwareMap hwMap, Telemetry tele) {
         drive = new driveTrain(hwMap);
         linkage = new linkageControl(hwMap, tele);
         locker = new locker(hwMap);
-        claw = new servoClaw(hwMap);
-        tail = new tail(hwMap);
-        linkage.init();
+        claw = new servoClaw(hwMap, tele);
+        arm = new backArm(hwMap, tele);
     }
 
-    public void run(Gamepad gamePad) {
-        drive.drivePower(gamePad);
+    public void run(Gamepad gamePad, Gamepad gamePad2) {
+        drive.move(gamePad);
         linkage.move(gamePad);
         locker.move(gamePad);
         claw.move(gamePad);
-        tail.move(gamePad);
+        arm.move(gamePad2);
     }
 }
