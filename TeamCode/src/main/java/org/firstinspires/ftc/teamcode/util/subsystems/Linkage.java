@@ -26,9 +26,9 @@ import dev.frozenmilk.mercurial.subsystems.SDKSubsystem;
 import dev.frozenmilk.mercurial.subsystems.Subsystem;
 import dev.frozenmilk.util.cell.Cell;
 
-public class linkage extends SDKSubsystem {
-    public static final linkage INSTANCE = new linkage();
-    private linkage() { }
+public class Linkage extends SDKSubsystem {
+    public static final Linkage INSTANCE = new Linkage();
+    private Linkage() { }
 
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.TYPE)
