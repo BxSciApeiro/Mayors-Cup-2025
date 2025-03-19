@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.auton;
+package org.firstinspires.ftc.teamcode.auto;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
@@ -11,8 +11,8 @@ import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import pedroPathing.constants.FConstants;
-import pedroPathing.constants.LConstants;
+import org.firstinspires.ftc.teamcode.util.pedroPathing.constants.FConstants;
+import org.firstinspires.ftc.teamcode.util.pedroPathing.constants.LConstants;
 
 @Autonomous(name = "pedroTest")
 public class pedroTest extends OpMode {
