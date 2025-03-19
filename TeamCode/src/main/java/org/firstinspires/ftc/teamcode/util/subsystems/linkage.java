@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.teamcode.util.constants;
 import org.firstinspires.ftc.teamcode.util.constants.slides;
 import org.firstinspires.ftc.teamcode.util.constants.slides.linkageState;
 
@@ -50,8 +49,6 @@ public class linkage extends SDKSubsystem {
     }
 
     private static Wrapper currentMode;
-    private static DcMotorEx leftMotor;
-    private static DcMotorEx rightMotor;
     private static double targetPos;
     private static double posTolerance = 50.0;
 
@@ -116,6 +113,14 @@ public class linkage extends SDKSubsystem {
         linkageState = slideState;
     }
 
+    public double getEncoder() {
+        return (encoder.get().state());
+    }
+
+    public double getTargetPos() {
+        return targetPos;
+    }
+
     @Override
     public void preUserInitHook(@NonNull Wrapper opMode) {
         currentMode = opMode;
@@ -124,34 +129,10 @@ public class linkage extends SDKSubsystem {
         rightSlides.get().setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
     }
 
-    public void setSlidePower(double power) {
-        if (linkageState != slides.linkageState.CONTROLLABLE) return;
-
-        if (leftSlides.get().getCurrentPosition() >= slides.BOTTOMLIMIT) {
-            leftMotor.setPower(-power);
-            rightMotor.setPower(power);
-        } else {
-            leftMotor.setPower(-power);
-            rightMotor.setPower(power);
-        }
-    }
-
     public Lambda setState(linkageState slideState) {
         return new Lambda("setSlideState")
                 .setInit(() -> setSlideState(slideState))
                 .setFinish(() -> controller.get().finished())
                 .setEnd((interrupted) -> setSlideState(slides.linkageState.CONTROLLABLE));
-    }
-
-    public Lambda setUpPower(double power) {
-        return new Lambda("setSlidePower")
-                .setInit(() -> setSlidePower(power))
-                .setFinish(() -> constants.ifOpMode(currentMode));
-    }
-
-    public Lambda setDownPower(double power) {
-        return new Lambda("setSlidePower")
-                .setInit(() -> setSlidePower(-power))
-                .setFinish(() -> constants.ifOpMode(currentMode));
     }
 }
