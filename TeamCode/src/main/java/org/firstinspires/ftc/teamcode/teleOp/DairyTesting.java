@@ -1,21 +1,23 @@
 package org.firstinspires.ftc.teamcode.teleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.util.subsystems.Linkage;
 import org.firstinspires.ftc.teamcode.util.constants.slides.linkageState;
 
-import dev.frozenmilk.dairy.core.util.features.BulkRead;
 import dev.frozenmilk.mercurial.Mercurial;
+import dev.frozenmilk.mercurial.bindings.BoundGamepad;
 
 @Mercurial.Attach
 @Linkage.Attach
-@BulkRead.Attach
-public class teleOp extends OpMode {
+@TeleOp
+public class DairyTesting extends OpMode {
     @Override
     public void init() {
-        Mercurial.gamepad1().rightTrigger().conditionalBindState().greaterThan(0.05).bind().onTrue(Linkage.INSTANCE.setState(linkageState.REST));
-        Mercurial.gamepad1().leftTrigger().conditionalBindState().greaterThan(0.05).bind().onTrue(Linkage.INSTANCE.setState(linkageState.WALL));
+        BoundGamepad Driver = Mercurial.gamepad1();
+        Driver.a().onTrue(Linkage.INSTANCE.setState(linkageState.REST));
+        Driver.b().onTrue(Linkage.INSTANCE.setState(linkageState.WALL));
     }
 
     @Override

@@ -1,44 +1,48 @@
 package org.firstinspires.ftc.teamcode.teleOp;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.teamcode.util.constants;
+
+@Config
 @TeleOp
 public class tuning extends OpMode {
     private PIDController controller;
 
     public static double p = 0, i = 0, d = 0;
-    public static double f = 0;
+    public static int target = 0;
 
     private DcMotorEx motor;
-    public int targetPos;
-    private final double ticks = 537.7 / 180;
+    private DcMotorEx motorTwo;
 
     @Override
     public void init() {
         controller = new PIDController(p, i , d);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        motor = hardwareMap.get(DcMotorEx.class, "tune_motor");
+        motor = hardwareMap.get(DcMotorEx.class, constants.slides.LEFTLINKAGE);
+        motorTwo = hardwareMap.get(DcMotorEx.class, constants.slides.RIGHTLINKAGE);
+        motor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     @Override
     public void loop() {
         controller.setPID(p, i , d);
         int motorPos = motor.getCurrentPosition();
-        double pid = controller.calculate(motorPos, targetPos);
-        double ff = Math.cos(Math.toRadians(targetPos / ticks)) * f;
+        double pid = controller.calculate(motorPos, target);
 
-        double power = pid + ff;
+        motor.setPower(pid);
+        motorTwo.setPower(pid);
 
-        motor.setPower(power);
-
-        telemetry.addData("currentPos: ", motorPos);
-        telemetry.addData("targetPos: ", targetPos);
+        telemetry.addData("currentPos", motorPos);
+        telemetry.addData("targetPos", target);
         telemetry.update();
     }
 }

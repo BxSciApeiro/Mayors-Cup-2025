@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.util.subsystems;
 
 import androidx.annotation.NonNull;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.util.constants.slides;
@@ -89,7 +90,7 @@ public class Linkage extends SDKSubsystem {
     );
 
     public void setTarget(double target) {
-        controller.get().setEnabled(true);
+//        controller.get().setEnabled(true);
         targetPos = target;
         targetSupplier.reset();
     }
@@ -132,7 +133,6 @@ public class Linkage extends SDKSubsystem {
     public Lambda setState(linkageState slideState) {
         return new Lambda("setSlideState")
                 .setInit(() -> setSlideState(slideState))
-                .setFinish(() -> controller.get().finished())
-                .setEnd((interrupted) -> setSlideState(slides.linkageState.CONTROLLABLE));
+                .setFinish(() -> controller.get().finished());
     }
 }
